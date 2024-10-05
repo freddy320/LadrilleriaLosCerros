@@ -52,6 +52,7 @@
   display: flex;
   align-items: center;
   transition: 500ms;
+  cursor: pointer;
 }
 
 .home .nav .item:hover{
