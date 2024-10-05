@@ -1,11 +1,8 @@
-import './style/App.css'
+import { Menu } from "./components/menu"
 
 function App() {
   return (
-    <section className="home">
-
-      dsdasdasdasd
-    </section>
+    <Menu/>
   )
 }
 
