@@ -19,6 +19,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap:20px;
+  font-size: 16px;
 }
 
 .home .aside .header{
@@ -47,11 +48,106 @@
  /* background-color: #EA8374; */
   padding: 5px 10px;
   border-radius: 4px;
+  gap: 10px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  transition: 500ms;
 }
+
+.home .nav .item:hover{
+  background-color: #EA8374;
+  color: #FEFFFE;
+}
+
+.home .nav .item .icon{
+  font-size: 20px;
+  transition: 500ms;
+}
+
+.home .nav .item:hover .icon{
+  transform: scale(1.2);
+  color: #FEFFFE ;
+}
+
+
 
 
 .home .footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   padding: 5px 10px;
 }
+
+.home .footer .avatarContainer{
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  border-radius: 100%;
+}
+
+.home .content{
+  padding: 10px;
+  display: grid;
+  gap: 15px;
+}
+
+.home .content .resume{
+  background-color: #FFFFFF;
+  padding: 5px;
+  height: 20vh;
+  border-radius: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 20px;
+}
+
+.home .content .resume .container{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.iconContainerMoney, .iconContainerBank, .iconContainerShop{
+  padding: 20px;
+  border-radius: 100%;
+}
+
+
+.home .content .details{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  grid-template-rows: 30vh 35vh;
+  grid-template-areas: 
+    "grafict clients" 
+    "products products"
+  ;
+}
+
+.home .content .details .grafict{
+  grid-area: grafict;
+  background-color: #FFFFFF;
+  padding: 5px;
+  border-radius: 7px;
+}
+
+.home .content .details .clients{
+  grid-area: clients;
+  background-color: #FFFFFF;
+  padding: 5px;
+  border-radius: 7px;
+}
+
+.home .content .details .products{
+  grid-area: products;
+  background-color: #FFFFFF;
+  padding: 5px;
+  border-radius: 7px;
+}
+
+
+
