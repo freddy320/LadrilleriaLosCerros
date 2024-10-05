@@ -94,8 +94,8 @@
 
 .resume-custom {
   background-color: #FFFFFF;
-  padding: 5px;
-  height: 20vh;
+  padding: 8px;
+  height: 18vh;
   border-radius: 7px;
   display: flex;
   flex-wrap: wrap;
@@ -103,12 +103,14 @@
   align-items: center;
   gap: 20px;
   font-size: 20px;
+  margin-bottom: 20px ;
 }
 
 .resume-custom .container-custom {
   display: flex;
   gap: 10px;
   align-items: center;
+  
 }
 
 .icon-container-custom {
@@ -132,4 +134,5 @@
   background-color: #FFFFFF;
   padding: 5px;
   border-radius: 7px;
+  
 }
