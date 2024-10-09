@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         background: '#F5F7FF',
-        contrast: '#FFFEFE'
+        contrast: '#FFFEFE',
+        themePage: '#EA8373',
+        themeDarkPage: '#4B4846'
       },
       fontFamily: {
         Montserrat: ['Montserrat', 'Montserrat Fallback'],
