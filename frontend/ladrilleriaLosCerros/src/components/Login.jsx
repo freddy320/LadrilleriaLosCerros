@@ -39,7 +39,7 @@ export function Login() {
         <form onSubmit={handleLogin} className="flex flex-col gap-5">
           <div className="flex flex-col">
             <label className="text-black" htmlFor="username">Username</label>
-            <div className="flex items-center border-b-2 border-black-300 py-2">
+            <div className="flex items-center border-b-2 border-gray-300 py-2">
               <CiUser className="text-black mr-2 scale-150" />
               <input
                 className="bg-transparent outline-none w-full text-black"
@@ -65,7 +65,11 @@ export function Login() {
               />
             </div>
           </div>
-          <button type="submit" className="bg-primary text-black p-3 rounded-lg hover:bg-secondary">
+          <button
+            type="submit"
+            className="bg-primary text-white p-3 rounded-lg hover:bg-secondary transform transition-transform duration-300 active:scale-95 text-lg font-bold"
+            style={{ backgroundColor: '#EA8373' }}
+          >
             Log In
           </button>
         </form>
