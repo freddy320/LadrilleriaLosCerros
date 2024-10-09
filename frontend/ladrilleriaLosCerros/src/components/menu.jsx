@@ -21,7 +21,7 @@ const Item = ({children}) => {
 export function Menu() {
   return (
     <main className="h-screen grid grid-cols-home font-Montserrat bg-background ">
-      <aside className="flex flex-col justify-between gap-3rounded-s bg-contrast p-1">
+      <aside className="flex flex-col justify-between gap-3rounded-s bg-contrast p-1 shadow-lg">
         <header className="flex flex-col gap-5">
           <div className="pinture-container-custom">
             <img className="pinture-custom" src={losCerros} alt="logo" />
