@@ -1,24 +1,37 @@
 import { CiBadgeDollar, CiShoppingCart, CiCalculator1 } from "react-icons/ci";
-import { useState } from "react";
+import { Children, useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
 import {Line} from "react-chartjs-2"
 import { Chart as ChartJs, CategoryScale, LinearScale,PointElement,LineElement,Tooltip,Legend,Title } from "chart.js";
 ChartJs.register(CategoryScale, LinearScale,PointElement,LineElement,Tooltip,Legend,Title);
 
-const opcions = {}
+
+const CardContainer = ({ children }) => {
+    return (
+        <div className="bg-contrast p-4 rounded-xl shadow-lg">
+            {children}
+        </div>
+    )
+}
+
+
+
+
+
+
 const lineCharData = {
     labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
     datasets: [
         {
             
-            label: 'Ventas',
+            label: 'Numero de ventas',
             data: [12, 19, 3, 5, 2, 3, 10],
-            borderColor: "rgb(75, 192, 192)",
+            borderColor: "#EA8373",
         },
 
     ],
 }
-const data = {}
+
 
 const LineChart = () => {
     return (
@@ -51,15 +64,15 @@ const ComboBox = ({ opcions }) => {
         setSelected(value);
     }
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col absolute top-0 right-0 mx-5 my-2">
             {
                 isActive ? opcions.map((opc) => (
-                    <div onClick={() => handleClick(opc)} key={opc} className="flex justify-center rounded-xl transition duration-500 bg-themePage items-center w-24 gap-3 p-2 font-medium text-contrast  cursor-pointer hover:bg-red-500">
+                    <div onClick={() => handleClick(opc)} key={opc} className="flex justify-center rounded-xl transition duration-500 bg-themePage items-center w-24 gap-3 p-2 font-medium text-contrast  cursor-pointer hover:bg-themePageDark">
                         {opc}<BiSolidDownArrow />
                     </div>
                 ))
                     :
-                    <div onClick={() => setActive(!isActive)} className="flex justify-center rounded-xl transition duration-500 bg-themePage items-center w-24 gap-3 p-2 font-medium hover:bg-themePage text-contrast cursor-pointer hover:bg-red-500">
+                    <div onClick={() => setActive(!isActive)} className="flex justify-center rounded-xl transition duration-500 bg-themePage items-center w-24 gap-3 p-2 font-medium hover:bg-themePage text-contrast cursor-pointer hover:bg-themePageDark">
                         {selected}<BiSolidDownArrow />
                     </div>
             }
@@ -76,12 +89,11 @@ export default function Panel() {
                 <ItemPanel title="Ventas" resultText="+ 50 ventas en el ultimo mes" result="1000" icon={<CiShoppingCart className="w-12 h-12" />} />
             </section>
 
-            <section className='grid grid-cols-2 gap-7  overflow-visible'>
-                <div className='bg-contrast px-5 py-2 rounded-xl   shadow-lg'  >
+            <section className='grid grid-cols-2  grid-rows-graficsPanel gap-2  overflow-visible'>
+                <div className='bg-contrast px-5 py-2 rounded-xl   shadow-lg relative'  >
                     <header className="flex justify-between items-baseline h-auto">
                         <div>
-                            <h2 className="font-extrabold text-xl">Informe de ventas por año</h2>
-                            <h5>Comparación de ventas por año</h5>
+                            <h2 className="font-extrabold text-xl">Informe general de ventas</h2>
                         </div>
                         <ComboBox opcions={['2024', '2023', '2022', '2021']} />
                     </header>
@@ -91,8 +103,8 @@ export default function Panel() {
                     
                 </div>
                 <div className='bg-contrast px-5 py-2 rounded-xl h-auto shadow-lg'>
-                    <h2 className="font-extrabold text-xl">Clientes</h2>
-                    <h5>Porcentajes de clientes fidelizados por venta</h5>
+                    <h2 className="font-semibold text-xl">Clientes</h2>
+                   
                 </div>
             </section>
 

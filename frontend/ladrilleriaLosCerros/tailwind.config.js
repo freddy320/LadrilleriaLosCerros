@@ -10,7 +10,8 @@ export default {
         background: '#F5F7FF',
         contrast: '#FFFEFE',
         themePage: '#EA8373',
-        themeDarkPage: '#4B4846'
+        themePageDark: '#CC7264',
+        darkBackground: '#4B4846'
       },
       fontFamily: {
         Montserrat: ['Montserrat', 'Montserrat Fallback'],
@@ -20,6 +21,10 @@ export default {
       gridTemplateColumns: {
         'home': '250px 1fr',
         'gridGraficts': '2fr 1fr',
+      },
+
+      gridTemplateRows: {
+        'graficsPanel': '350px 1fr',
       },
     },
   },
