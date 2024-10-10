@@ -12,3 +12,6 @@ http://localhost:8080/api/ventas/contar/anio/1?anio=2024
 
 ## CICLO DE VENTAS DE UN CLIENTE Y MENSAJE DE RECORDATORIO SI NO HA COMPRADO
 http://localhost:8080/api/ventas/verificar/2
+
+## LISTADO DE PRODUCTOS VENDIDOS
+http://localhost:8080/api/productos/listar_ventas

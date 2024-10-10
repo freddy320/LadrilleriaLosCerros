@@ -1,6 +1,7 @@
 package com.ladrillera.ladrillera.productos.controller;
 
 import com.ladrillera.ladrillera.productos.entity.Productos;
+import com.ladrillera.ladrillera.productos.entity.VentaProductoDTO;
 import com.ladrillera.ladrillera.productos.services.ProductosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/productos")
@@ -22,7 +25,9 @@ public class ProductosController {
         return productosService.listarProductos();
     }
 
-    //Hola que hace
-
-    //Nada
+    //EndPoint Para Listar Aquellas Ventas Simuladas
+    @GetMapping("/listar_ventas")
+    public List<VentaProductoDTO> listarProductosVendidos() {
+        return productosService.listarProductosVendidos();
+    }
 }
