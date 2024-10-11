@@ -23,4 +23,6 @@ public interface VentasService {
 
   double calcularPromedioVentasPorMes(int mes, int anio); // Metodo para el promedio de ventas por Mes
 
+  List<Map<String, Object>> obtenerTopTresClientesPorVentas(); // Metodo para obtener los 3 clientes
+
 }
