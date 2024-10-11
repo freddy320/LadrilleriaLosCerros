@@ -1,11 +1,15 @@
 package com.ladrillera.ladrillera.ventas.services.Impl;
 
+import com.ladrillera.ladrillera.clientes.entity.Clientes;
+import com.ladrillera.ladrillera.clientes.repository.ClientesRepository;
 import com.ladrillera.ladrillera.ventas.entity.Ventas;
 import com.ladrillera.ladrillera.ventas.repository.VentasRepository;
 import com.ladrillera.ladrillera.ventas.services.VentasService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,12 +17,16 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class VentasServiceImpl implements VentasService {
 
     @Autowired
     private VentasRepository ventasRepository;
+
+    @Autowired
+    private ClientesRepository clientesRepository;
 
     @Override
     public List<Ventas> listarVentasPorCliente(Integer clienteId) {
@@ -134,4 +142,17 @@ public class VentasServiceImpl implements VentasService {
         return ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
     }
 
+    @Override
+    public List<Map<String, Object>> obtenerTopTresClientesPorVentas() {
+        Pageable topTres = PageRequest.of(0, 3);
+        List<Map<String, Object>> topClientes = ventasRepository.findTopClientesPorVentas(topTres);
+        for (Map<String, Object> cliente : topClientes) {
+            Long clienteId = ((Number) cliente.get("clienteId")).longValue();
+            Optional<Clientes> clienteInfo = clientesRepository.findById(clienteId);
+
+            clienteInfo.ifPresent(info -> cliente.put("nombre", info.getNombre()));
+        }
+
+        return topClientes;
+    }
 }

@@ -1,6 +1,8 @@
 package com.ladrillera.ladrillera.ventas.repository;
 
 import com.ladrillera.ladrillera.ventas.entity.Ventas;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface VentasRepository extends JpaRepository<Ventas, Long> {
@@ -44,5 +47,12 @@ public interface VentasRepository extends JpaRepository<Ventas, Long> {
         @Query("SELECT COUNT(v) FROM Ventas v WHERE v.sede = :sede AND v.fecha BETWEEN :startDate AND :endDate")
         long countBySedeAndMes(@Param("sede") String sede, @Param("startDate") LocalDate startDate,
                         @Param("endDate") LocalDate endDate);
+
+        // Metodo para agrupar las ventas de los clientes
+        @Query("SELECT new map(v.clienteId as clienteId, COUNT(v) as cantidadVentas) " +
+                        "FROM Ventas v " +
+                        "GROUP BY v.clienteId " +
+                        "ORDER BY COUNT(v) DESC")
+        List<Map<String, Object>> findTopClientesPorVentas(Pageable pageable);
 
 }
