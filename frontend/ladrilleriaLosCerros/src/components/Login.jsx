@@ -36,10 +36,10 @@ export function Login() {
         <div className="pinture-container-custom flex justify-center mb-6">
           <img className="pinture-custom" src={logoCerros} alt="logo" />
         </div>
-        <form onSubmit={handleLogin} className="flex flex-col gap-5">
+        <form onSubmit={handleLogin} className="flex flex-col gap-3">
           <div className="flex flex-col">
             <label className="text-black" htmlFor="username">Username</label>
-            <div className="flex items-center border-b-2 border-gray-300 py-2">
+            <div className="flex items-center border-b-2 border-red-300 py-2">
               <CiUser className="text-black mr-2 scale-150" />
               <input
                 className="bg-transparent outline-none w-full text-black"
@@ -53,7 +53,7 @@ export function Login() {
           </div>
           <div className="flex flex-col">
             <label className="text-black" htmlFor="password">Password</label>
-            <div className="flex items-center border-b-2 border-gray-300 py-2">
+            <div className="flex items-center border-b-2 border-red-300 py-2">
               <CiLock className="text-black mr-2 scale-150" />
               <input
                 className="bg-transparent outline-none w-full text-black"
@@ -65,6 +65,7 @@ export function Login() {
               />
             </div>
           </div>
+          <p className="text-red-00 text-sm mt-8 text-left">¿Olvidaste tu contraseña?</p>
           <button
             type="submit"
             className="bg-primary text-white p-3 rounded-lg hover:bg-secondary transform transition-transform duration-300 active:scale-95 text-lg font-bold"
@@ -74,6 +75,7 @@ export function Login() {
           </button>
         </form>
       </div>
+      
     </main>
   );
 }
