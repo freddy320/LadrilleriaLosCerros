@@ -8,7 +8,7 @@ ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 const CardContainer = ({ children }) => {
     return (
-        <div className="bg-contrast p-4 rounded-xl shadow-lg">
+        <div className="grid grid-cols-3 grid-cols-gridGraficts h-28">
             {children}
         </div>
     )
