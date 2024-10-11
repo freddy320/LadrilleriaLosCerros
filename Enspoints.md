@@ -15,3 +15,21 @@ http://localhost:8080/api/ventas/verificar/2
 
 ## LISTADO DE PRODUCTOS VENDIDOS
 http://localhost:8080/api/productos/listar_ventas
+
+## LISTAR PLANES DE PAGO (GET)
+http://localhost:8080/api/PlanesDePago/listar_planes
+
+## Guardar Plan De Pago (POST)
+http://localhost:8080/api/PlanesDePago
+
+## LISTAR CONTROLES DE PAGO (GET)
+http://localhost:8080/api/Control_Pagos/listar_control
+
+## GUARDAR CONTROLES DE PAGO (POST):
+http://localhost:8080/api/Control_Pagos/guardar
+
+## LISTAR PAGOS
+http://localhost:8080/api/Pagos/listar_pagos
+
+## GUARDAR PAGOS
+http://localhost:8080/api/Pagos
