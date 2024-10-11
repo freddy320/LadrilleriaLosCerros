@@ -22,6 +22,10 @@ http://localhost:8080/api/PlanesDePago/listar_planes
 ## Guardar Plan De Pago (POST)
 http://localhost:8080/api/PlanesDePago
 
+
+## LOS 2 POST FINALES TIENEN ERROR AL MOMENTO DE GUARDAR LA VARIABLE REFERENTE AL PLAN DE PAGO
+
+
 ## LISTAR CONTROLES DE PAGO (GET)
 http://localhost:8080/api/Control_Pagos/listar_control
 
