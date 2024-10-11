@@ -8,7 +8,7 @@ ChartJs.register(CategoryScale, LinearScale,PointElement,LineElement,Tooltip,Leg
 
 const CardContainer = ({ children }) => {
     return (
-        <div className="bg-contrast p-4 rounded-xl shadow-lg">
+        <div className="grid grid-cols-3 grid-cols-gridGraficts h-28">
             {children}
         </div>
     )
@@ -104,7 +104,8 @@ export default function Panel() {
                 </div>
                 <div className='bg-contrast px-5 py-2 rounded-xl h-auto shadow-lg'>
                     <h2 className="font-semibold text-xl">Clientes</h2>
-                   
+                    <CardContainer/>
+                    <h2 className="font-semibold text-xl">Productos</h2>
                 </div>
             </section>
 
