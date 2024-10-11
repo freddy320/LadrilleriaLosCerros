@@ -34,7 +34,7 @@ public interface VentasRepository extends JpaRepository<Ventas, Long> {
                         @Param("startDate") LocalDate startDate,
                         @Param("endDate") LocalDate endDate);
 
-        // Método para contar ventas por sucursal
+        // Método para contar ventas por sucursal anualmente
         @Query("SELECT COUNT(v) FROM Ventas v WHERE v.sede = :sede AND v.fecha BETWEEN :startDate AND :endDate")
         long countBySedeAndFechaBetween(@Param("sede") String sede, @Param("startDate") LocalDate startDate,
                         @Param("endDate") LocalDate endDate);

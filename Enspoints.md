@@ -46,7 +46,7 @@ Uso del ?: Separa la ruta de los parámetros de consulta.
 Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
 
 NUMERO VENTAS POR AÑO Y SURCUSAL
-http://localhost:8080/api/ventas/contar/sucursal/meses?sucursal=sede central&anio=2023
+http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=sede cali&anio=2023
 
 Parametros en orden:
 @RequestParam("sucursal"): Nombre de la sucursal despues del ?

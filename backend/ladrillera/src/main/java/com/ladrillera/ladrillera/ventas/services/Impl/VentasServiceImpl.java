@@ -15,9 +15,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.LinkedHashMap;
 
 @Service
 public class VentasServiceImpl implements VentasService {
@@ -121,14 +123,18 @@ public class VentasServiceImpl implements VentasService {
 
     @Override
     public Map<String, Long> contarVentasPorSucursal(String sucursal, int anio) {
-        Map<String, Long> ventasPorMes = new HashMap<>();
+        Map<String, Long> ventasPorMes = new LinkedHashMap<>(); // Usar LinkedHashMap para mantener el orden
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM", new Locale("es")); // Formato en español
 
         for (int mes = 1; mes <= 12; mes++) {
             LocalDate fechaInicio = LocalDate.of(anio, mes, 1);
             LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
 
             long ventas = ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
-            ventasPorMes.put(fechaInicio.getMonth().name(), ventas); // Nombre del mes en texto
+            String mesEnEspanol = fechaInicio.format(formatter); // Obtener el mes en español
+
+            // Agregar al mapa usando el nombre del mes en español
+            ventasPorMes.put(mesEnEspanol, ventas);
         }
 
         return ventasPorMes;
