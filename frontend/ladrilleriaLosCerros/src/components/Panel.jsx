@@ -79,15 +79,6 @@ export default function Panel() {
                             <LineChart />
                         </div>
                     </div>
-<<<<<<< HEAD
-                    
-                </div>
-                <div className='bg-contrast px-5 py-2 rounded-xl h-auto shadow-lg'>
-                    <h2 className="font-semibold text-xl">Clientes</h2>
-                    <CardContainer/>
-                    <h2 className="font-semibold text-xl">Productos</h2>
-                </div>
-=======
 
                     {/* Clients Chart */}
                     <div className='bg-contrast px-5 py-2 rounded-xl shadow-lg'>
@@ -101,7 +92,6 @@ export default function Panel() {
             <section className="w-1/5 bg-contrast p-4 rounded-xl shadow-lg">
             <h3 className="font-bold text-base">Filtros</h3>
                 <Filtros />
->>>>>>> a2bde9d081344f12701d64b78ecd706dff0b5a40
             </section>
         </div>
 
