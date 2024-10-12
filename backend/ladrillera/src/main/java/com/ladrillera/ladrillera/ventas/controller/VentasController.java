@@ -4,6 +4,8 @@ import com.ladrillera.ladrillera.ventas.entity.Ventas;
 import com.ladrillera.ladrillera.ventas.services.VentasService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,34 +25,45 @@ public class VentasController {
 
     // Endpoint para listar las ventas por cliente
     @GetMapping("/listar/{clienteId}")
-    public List<Ventas> listarVentasPorCliente(@PathVariable Integer clienteId) {
+    public List<Ventas> listarVentasPorCliente(@PathVariable Long clienteId) {
         return ventasService.listarVentasPorCliente(clienteId);
     }
 
-    // Endpoint para contar ventas por cliente en un día
+    // Método para contar ventas por cliente en un día específico
     @GetMapping("/contar/dia/{clienteId}")
-    public long contarVentasPorClientePorDia(@PathVariable Integer clienteId, @RequestParam LocalDate fecha) {
+    public long contarVentasPorClientePorDia(
+            @PathVariable Long clienteId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         return ventasService.contarVentasPorClientePorDia(clienteId, fecha);
     }
 
-    // Endpoint para contar ventas por cliente en un mes y año
+    // Método para contar ventas por cliente en un mes y año específicos
     @GetMapping("/contar/mes/{clienteId}")
-    public long contarVentasPorClientePorMes(@PathVariable Integer clienteId, @RequestParam int mes,
+    public long contarVentasPorClientePorMes(
+            @PathVariable Long clienteId,
+            @RequestParam int mes,
             @RequestParam int anio) {
         return ventasService.contarVentasPorClientePorMes(clienteId, mes, anio);
     }
 
-    // Endpoint para contar ventas por cliente en un año
+    // Método para contar ventas por cliente en un año específico
     @GetMapping("/contar/anio/{clienteId}")
-    public long contarVentasPorClientePorAnio(@PathVariable Integer clienteId, @RequestParam int anio) {
+    public long contarVentasPorClientePorAnio(
+            @PathVariable Long clienteId,
+            @RequestParam int anio) {
         return ventasService.contarVentasPorClientePorAnio(clienteId, anio);
     }
 
+
+
     // Endpoint para verificar la posibilidad de compra
     @GetMapping("/verificar/{clienteId}")
-    public String verificarPosibilidadDeCompra(@PathVariable Integer clienteId) {
+    public String verificarPosibilidadDeCompra(@PathVariable Long clienteId) {
         return ventasService.verificarPosibilidadDeCompra(clienteId);
     }
+
+
+
 
     // Endpoint para las ventas de las sucursales en un año
     @GetMapping("/contar/sucursal/anio")
@@ -70,6 +83,12 @@ public class VentasController {
     public double promedioVentasPorMes(@RequestParam int mes, @RequestParam int anio) {
         // Lógica para calcular el promedio de ventas por mes
         return ventasService.calcularPromedioVentasPorMes(mes, anio);
+    }
+
+    @GetMapping("/top-clientes")
+    public ResponseEntity<List<Map<String, Object>>> obtenerTopTresClientesPorVentas() {
+        List<Map<String, Object>> topClientes = ventasService.obtenerTopTresClientesPorVentas();
+        return ResponseEntity.ok(topClientes);
     }
 
 }
