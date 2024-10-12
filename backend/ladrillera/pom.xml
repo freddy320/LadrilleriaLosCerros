@@ -60,6 +60,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>jakarta.mail</artifactId> <!-- o javax.mail si usas una versión anterior -->
+			<version>1.6.7</version> <!-- Ajusta la versión según necesites -->
+		</dependency>
 	</dependencies>
 
 	<build>
