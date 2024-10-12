@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name ="control_pagos")
+@Table(name = "control_pagos")
 public class Control_Pagos {
 
     @Id
@@ -20,7 +20,7 @@ public class Control_Pagos {
 
     @ManyToOne
     @JoinColumn(name = "plan_pago_id", nullable = false)
-    private Planes_Pago plan_Pago;
+    private Planes_Pago planPago;
 
     @Column(name = "numero_cuotas", nullable = false)
     private Integer numero_cuotas;
@@ -53,8 +53,6 @@ public class Control_Pagos {
         this.id = id;
     }
 
-   
-
     public Integer getId_cliente() {
         return id_cliente;
     }
@@ -71,13 +69,12 @@ public class Control_Pagos {
         this.nombre_cliente = nombre_cliente;
     }
 
-
     public Planes_Pago getPlanPago() {
-        return plan_Pago;
+        return planPago;
     }
 
-    public void setPlanPago(Planes_Pago plan_Pago) {
-        this.plan_Pago = plan_Pago;
+    public void setPlanPago(Planes_Pago planPago) {
+        this.planPago = planPago;
     }
 
     public Integer getnumero_cuotas() {

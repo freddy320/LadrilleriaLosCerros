@@ -14,21 +14,20 @@ import java.util.Optional;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/Control_Pagos")
+@RequestMapping("/api/control")
 public class ControlPagoController {
 
-     @Autowired
+    @Autowired
     private ControlPagoService controlPagoService;
 
     @Autowired
     private PlanesDePagoService planesDePagoService;
 
-    @GetMapping("/listar_control")
-    public List<Control_Pagos> listarControles(){
+    @GetMapping("/listar")
+    public List<Control_Pagos> listarControles() {
         return controlPagoService.listarControles();
     }
 
-   
     @PostMapping("/guardar")
     public ResponseEntity<Control_Pagos> guardarControl(@RequestBody Control_Pagos control) {
         if (control.getPlanPago() == null || control.getPlanPago().getId() == null) {
