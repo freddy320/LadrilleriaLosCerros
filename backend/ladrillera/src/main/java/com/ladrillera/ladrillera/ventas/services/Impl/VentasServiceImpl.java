@@ -150,8 +150,8 @@ public class VentasServiceImpl implements VentasService {
     // Nuevos metodos para las ventas
 
     @Override
-    public double calcularPromedioVentasPorMes(int mes, int anio) {
-        List<Ventas> ventasDelMes = ventasRepository.obtenerVentasPorMes(mes, anio);
+    public double calcularPromedioVentasPorMes(String sucursal, int mes, int anio) {
+        List<Ventas> ventasDelMes = ventasRepository.obtenerVentasPorSucursalYMes(mes, anio, sucursal);
 
         // Sumar el total de las ventas del mes
         BigDecimal totalVentas = ventasDelMes.stream()
@@ -161,13 +161,12 @@ public class VentasServiceImpl implements VentasService {
         int cantidadVentas = ventasDelMes.size();
 
         if (cantidadVentas == 0) {
-            return 0;
+            return 0; // O podrías lanzar una excepción personalizada
         }
 
         // Calcular el promedio (total ventas / cantidad de ventas)
         BigDecimal promedio = totalVentas.divide(BigDecimal.valueOf(cantidadVentas), RoundingMode.HALF_UP);
 
-        // Convertir a double si es necesario
         return promedio.doubleValue();
     }
 

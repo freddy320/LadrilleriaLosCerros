@@ -21,7 +21,7 @@ public interface VentasService {
 
   long contarVentasPorSucursalPorMes(String sucursal, int mes, int anio);
 
-  double calcularPromedioVentasPorMes(int mes, int anio); // Metodo para el promedio de ventas por Mes
+  double calcularPromedioVentasPorMes(String sucursal, int mes, int anio);
 
   List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, int mes, int anio);
 

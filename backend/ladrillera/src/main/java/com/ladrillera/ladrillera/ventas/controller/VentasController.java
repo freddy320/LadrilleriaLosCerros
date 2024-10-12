@@ -75,9 +75,8 @@ public class VentasController {
 
     // Método para obtener el promedio de ventas por mes
     @GetMapping("/promedio/mes")
-    public double promedioVentasPorMes(@RequestParam int mes, @RequestParam int anio) {
-        // Lógica para calcular el promedio de ventas por mes
-        return ventasService.calcularPromedioVentasPorMes(mes, anio);
+    public double promedioVentasPorMes(@RequestParam String sucursal, @RequestParam int mes, @RequestParam int anio) {
+        return ventasService.calcularPromedioVentasPorMes(sucursal, mes, anio);
     }
 
     // Metodo para obtener los clientes con mas ventas filtrado
