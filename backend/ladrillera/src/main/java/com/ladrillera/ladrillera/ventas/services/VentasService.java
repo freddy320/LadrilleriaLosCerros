@@ -7,15 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface VentasService {
-  List<Ventas> listarVentasPorCliente(Integer clienteId); // Método para listar ventas por clienteId
+  List<Ventas> listarVentasPorCliente(Long clienteId); // Método para listar ventas por clienteId
 
-  long contarVentasPorClientePorDia(Integer clienteId, LocalDate fecha);
-
-  long contarVentasPorClientePorMes(Integer clienteId, int mes, int anio); // Metodo mes
-
-  long contarVentasPorClientePorAnio(Integer clienteId, int anio); // Metodo año
-
-  String verificarPosibilidadDeCompra(Integer clienteId);
+  long contarVentasPorClientePorDia(Long clienteId, LocalDate fecha);
+  long contarVentasPorClientePorMes(Long clienteId, int mes, int anio);
+  long contarVentasPorClientePorAnio(Long clienteId, int anio);
+  String verificarPosibilidadDeCompra(Long clienteId);
 
   Map<String, Long> contarVentasPorSucursal(String sucursal, int anio);
 
