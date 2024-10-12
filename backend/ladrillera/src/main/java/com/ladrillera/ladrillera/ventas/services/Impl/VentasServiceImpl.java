@@ -44,7 +44,6 @@ public class VentasServiceImpl implements VentasService {
         return ventasRepository.findByClienteId(clienteId); // Llama al repositorio para buscar ventas por clienteId
     }
 
-
     // Método para contar ventas por cliente en un día específico
     @Override
     public long contarVentasPorClientePorDia(Long clienteId, LocalDate fecha) {
@@ -148,9 +147,6 @@ public class VentasServiceImpl implements VentasService {
         return mensaje.toString();
     }
 
-
-
-
     // Nuevos metodos para las ventas
 
     @Override
@@ -203,9 +199,10 @@ public class VentasServiceImpl implements VentasService {
     }
 
     @Override
-    public List<Map<String, Object>> obtenerTopTresClientesPorVentas() {
+    public List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, int mes, int anio) {
         Pageable topTres = PageRequest.of(0, 3);
-        List<Map<String, Object>> topClientes = ventasRepository.findTopClientesPorVentas(topTres);
+        List<Map<String, Object>> topClientes = ventasRepository.findTopClientesPorVentas(sucursal, mes, anio, topTres);
+
         for (Map<String, Object> cliente : topClientes) {
             Long clienteId = ((Number) cliente.get("clienteId")).longValue();
             Optional<Clientes> clienteInfo = clientesRepository.findById(clienteId);
@@ -215,4 +212,24 @@ public class VentasServiceImpl implements VentasService {
 
         return topClientes;
     }
+
+    @Override
+    public List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, int mes, int anio) {
+        Pageable topTres = PageRequest.of(0, 3);
+        List<Map<String, Object>> topProductos = ventasRepository.findTopProductosPorVentas(sucursal, mes, anio,
+                topTres);
+
+        for (Map<String, Object> producto : topProductos) {
+            Long productoId = ((Number) producto.get("productoId")).longValue();
+            Optional<Productos> productoInfo = productosRepository.findById(productoId);
+
+            productoInfo.ifPresent(info -> {
+                producto.put("nombre", info.getNombre());
+                producto.put("descripcion", info.getDescripcion());
+            });
+        }
+
+        return topProductos;
+    }
+
 }

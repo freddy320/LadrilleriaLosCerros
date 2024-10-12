@@ -10,8 +10,11 @@ public interface VentasService {
   List<Ventas> listarVentasPorCliente(Long clienteId); // Método para listar ventas por clienteId
 
   long contarVentasPorClientePorDia(Long clienteId, LocalDate fecha);
+
   long contarVentasPorClientePorMes(Long clienteId, int mes, int anio);
+
   long contarVentasPorClientePorAnio(Long clienteId, int anio);
+
   String verificarPosibilidadDeCompra(Long clienteId);
 
   Map<String, Long> contarVentasPorSucursal(String sucursal, int anio);
@@ -20,6 +23,8 @@ public interface VentasService {
 
   double calcularPromedioVentasPorMes(int mes, int anio); // Metodo para el promedio de ventas por Mes
 
-  List<Map<String, Object>> obtenerTopTresClientesPorVentas(); // Metodo para obtener los 3 clientes
+  List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, int mes, int anio);
+
+  List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, int mes, int anio);
 
 }

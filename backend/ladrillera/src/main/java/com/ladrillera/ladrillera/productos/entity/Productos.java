@@ -31,18 +31,26 @@ public class Productos {
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
-    // Constructor por defecto
+    @Column(name = "cantidad", nullable = false)
+    private Integer cantidad;
+
+    
     public Productos() {
     }
 
-    public Productos(Long id, Long codigo, String nombre, BigDecimal precioUnitario, String descripcion, Boolean activo) {
+
+    public Productos(Long id, Long codigo, String nombre, BigDecimal precioUnitario, String descripcion, Boolean activo,
+            Integer cantidad) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
         this.precioUnitario = precioUnitario;
         this.descripcion = descripcion;
         this.activo = activo;
+        this.cantidad = cantidad;
     }
+
+
 
     public Long getId() {
         return id;
@@ -90,5 +98,14 @@ public class Productos {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    // Getter y Setter para el nuevo atributo 'cantidad'
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 }

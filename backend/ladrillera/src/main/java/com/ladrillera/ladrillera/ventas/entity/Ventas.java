@@ -2,7 +2,6 @@ package com.ladrillera.ladrillera.ventas.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,18 +24,17 @@ public class Ventas {
     private String prefijo;
 
     @Column(name = "cliente_id", nullable = false)
-    private Long clienteId; // Cliente ID con anotación de columna
+    private Long clienteId; // Cliente ID
 
     @Column(name = "ciudad", nullable = false, length = 50)
     private String ciudad;
 
     @Column(name = "total_venta", precision = 15, scale = 2, nullable = false)
-    private BigDecimal totalVenta; // Total de la venta con precisión y escala
+    private BigDecimal totalVenta; // Total de la venta
 
     @Column(name = "sede", nullable = false, length = 50)
     private String sede;
 
-    // Nuevos campos
     @Column(name = "tipo_documento", nullable = false, length = 20)
     private String tipoDocumento;
 
@@ -45,9 +43,6 @@ public class Ventas {
 
     @Column(name = "fecha_vencimiento_pago", nullable = true)
     private LocalDate fechaVencimientoPago;
-
-    @Column(name = "sucursal", nullable = false, length = 50)
-    private String sucursal;
 
     @Column(name = "estado_id", nullable = false)
     private Long estadoId; // Estado ID
@@ -76,16 +71,19 @@ public class Ventas {
     @Column(name = "fecha_anulacion")
     private LocalDate fechaAnulacion; // Fecha de Anulación
 
+    @Column(name = "cantidad", nullable = false)
+    private Long cantidad; // Cantidad de productos vendidos
+
     // Constructor por defecto
     public Ventas() {
     }
 
     public Ventas(Long id, LocalDate fecha, String prefijo, Long clienteId, String ciudad,
-                  BigDecimal totalVenta, String sede, String tipoDocumento, String formaDePago,
-                  LocalDate fechaVencimientoPago, String sucursal, Long estadoId, Long empleadoId,
-                  Long productoId, BigDecimal precioUnitario, BigDecimal precioFacturado,
-                  BigDecimal subTotal, BigDecimal iva, Boolean anulado, LocalDate fechaAnulacion) {
-
+            BigDecimal totalVenta, String sede, String tipoDocumento, String formaDePago,
+            LocalDate fechaVencimientoPago, Long estadoId, Long empleadoId,
+            Long productoId, BigDecimal precioUnitario, BigDecimal precioFacturado,
+            BigDecimal subTotal, BigDecimal iva, Boolean anulado, LocalDate fechaAnulacion,
+            Long cantidad) {
         this.id = id;
         this.fecha = fecha;
         this.prefijo = prefijo;
@@ -96,7 +94,6 @@ public class Ventas {
         this.tipoDocumento = tipoDocumento;
         this.formaDePago = formaDePago;
         this.fechaVencimientoPago = fechaVencimientoPago;
-        this.sucursal = sucursal;
         this.estadoId = estadoId;
         this.empleadoId = empleadoId;
         this.productoId = productoId;
@@ -106,6 +103,7 @@ public class Ventas {
         this.iva = iva;
         this.anulado = anulado;
         this.fechaAnulacion = fechaAnulacion;
+        this.cantidad = cantidad; // Inicialización del nuevo campo
     }
 
     // Getters y setters
@@ -189,14 +187,6 @@ public class Ventas {
         this.fechaVencimientoPago = fechaVencimientoPago;
     }
 
-    public String getSucursal() {
-        return sucursal;
-    }
-
-    public void setSucursal(String sucursal) {
-        this.sucursal = sucursal;
-    }
-
     public Long getEstadoId() {
         return estadoId;
     }
@@ -267,5 +257,13 @@ public class Ventas {
 
     public void setFechaAnulacion(LocalDate fechaAnulacion) {
         this.fechaAnulacion = fechaAnulacion;
+    }
+
+    public Long getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Long cantidad) {
+        this.cantidad = cantidad;
     }
 }

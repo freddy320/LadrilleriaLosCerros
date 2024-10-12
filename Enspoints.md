@@ -1,6 +1,5 @@
 # END POINTS DE LA API PARA LADRILLERIA LOS CERROS || SAN MIGUEL
 
-
 NUMERO DE VENTAS A UN CLIENTE POR DIA
 http://localhost:8080/api/ventas/contar/dia/1?&fecha=2024-10-07
 
@@ -64,8 +63,18 @@ Uso del ?: Separa la ruta de los parámetros de consulta.
 Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
 
 TOP 3 DE CLIENTES CON MAS VENTAS
-http://localhost:8080/api/ventas/top-clientes
-(No tiene parametros)
+http://localhost:8080/api/ventas/top-clientes?sucursal=sede norte&mes=10&anio=2024
+Parametros
+sucursal
+mes
+anio
+
+TOP 3 PRODUCTOS MAS VENDIDOS POR SUCURSAL, MES Y ANIO
+http://localhost:8080/api/ventas/top-productos?sucursal=sede norte&mes=10&anio=2024
+Parametros
+sucursal
+mes
+anio
 
 ## LISTADO DE PRODUCTOS VENDIDOS
 
@@ -76,7 +85,6 @@ http://localhost:8080/api/productos/listar_ventas
 http://localhost:8080/api/planes/listar
 
 ## Guardar Plan De Pago (POST)
-
 
 http://localhost:8080/api/planes/guardar
 
@@ -99,4 +107,7 @@ http://localhost:8080/api/pagos/listar
 http://localhost:8080/api/pagos/guardar
 
 ##
+
+```
+
 ```
