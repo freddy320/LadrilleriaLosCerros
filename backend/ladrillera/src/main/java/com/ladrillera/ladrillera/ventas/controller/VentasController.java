@@ -4,6 +4,7 @@ import com.ladrillera.ladrillera.ventas.entity.Ventas;
 import com.ladrillera.ladrillera.ventas.services.VentasService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,6 +71,12 @@ public class VentasController {
     public double promedioVentasPorMes(@RequestParam int mes, @RequestParam int anio) {
         // Lógica para calcular el promedio de ventas por mes
         return ventasService.calcularPromedioVentasPorMes(mes, anio);
+    }
+
+    @GetMapping("/top-clientes")
+    public ResponseEntity<List<Map<String, Object>>> obtenerTopTresClientesPorVentas() {
+        List<Map<String, Object>> topClientes = ventasService.obtenerTopTresClientesPorVentas();
+        return ResponseEntity.ok(topClientes);
     }
 
 }
