@@ -1,6 +1,5 @@
 package com.ladrillera.ladrillera.controldepagos.controller;
 
-
 import com.ladrillera.ladrillera.controldepagos.entify.Planes_Pago;
 import com.ladrillera.ladrillera.controldepagos.services.PlanesDePagoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/PlanesDePago")
+@RequestMapping("/api/planes")
 public class PlanesDePagoController {
 
     @Autowired
     private PlanesDePagoService planesDePagoService;
 
-    @GetMapping("/listar_planes")
+    @GetMapping("/listar")
     public List<Planes_Pago> ListarPlanes() {
         return planesDePagoService.ListarPlanes();
     }
 
-    @PostMapping
+    @PostMapping("/guardar")
     public ResponseEntity<Planes_Pago> guardarPlan(@RequestBody Planes_Pago plan) {
         return ResponseEntity.ok(planesDePagoService.guardarPlan(plan));
     }

@@ -12,21 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/api/Pagos")
+@RequestMapping("/api/pagos")
 public class PagosController {
-    
+
     @Autowired
     private PagosService pagosService;
 
-    @GetMapping("/listar_pagos")
+    @GetMapping("/listar")
     public List<Pagos> ListarPagos() {
         return pagosService.ListarPagos();
     }
 
-    @PostMapping
-    public ResponseEntity<Pagos> guardarPago(@RequestBody Pagos pago){
+    @PostMapping("/guardar")
+    public ResponseEntity<Pagos> guardarPago(@RequestBody Pagos pago) {
         return ResponseEntity.ok(pagosService.guardarPago(pago));
     }
 }
