@@ -3,26 +3,61 @@ import { PiBuildingApartmentThin } from "react-icons/pi";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJs, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title } from "chart.js";
 import Filtros from "./panel/Filtros";
+import { useEffect, useState } from "react";
 ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title);
 
-const lineCharData = {
-    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-    datasets: [
-        {
-            label: 'Numero de ventas',
-            data: [12, 19, 3, 5, 2, 3, 10],
-            borderColor: "#EA8373",
-        },
-    ],
-}
+
+
 
 const LineChart = () => {
+    const [result, setResult] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=Sucursal1&anio=2024');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log(data);
+                setResult(data);
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        console.log(result);
+    }, [result]);
+
     return (
         <div className="bg-contrast p-4 rounded-xl shadow-lg h-96 w-full">
-            <Line data={lineCharData} options={{ responsive: true, maintainAspectRatio: false }} className="w-full" />
+            {Array.isArray(result) && result.length > 0 ? (
+                <Line
+                    data={{
+                        labels: result.map((item) => item.mes),
+                        datasets: [
+                            {
+                                label: 'Ventas',
+                                data: result.map((item) => item.cantidad),
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1,
+                            }
+                        ]
+                    }}
+                    options={{ responsive: true, maintainAspectRatio: false }}
+                    className="w-full"
+                />
+            ) : (
+                <p>Cargando datos...</p>
+            )}
         </div>
-    )
-}
+    );
+};
 
 const ItemPanel = ({ title, resultText, result, icon }) => {
     return (
