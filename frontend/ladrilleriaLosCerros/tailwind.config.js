@@ -20,11 +20,13 @@ export default {
      
       gridTemplateColumns: {
         'home': '250px 1fr',
-        'gridGraficts': '2fr 1fr',
+        'gridGraficts': '4fr 1fr',
+
+        'gridMenuGraficts': '4fr 1fr'
       },
 
       gridTemplateRows: {
-        'graficsPanel': '350px 1fr',
+        'graficsPanel': '0.4fr 1fr 8fr 0.5fr'
       },
     },
   },

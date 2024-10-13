@@ -1,102 +1,78 @@
-export default function Filtros() {
+import { useState } from "react";
+import { CiSearch } from "react-icons/ci";
+import { CiFilter } from "react-icons/ci";
+import { SlArrowDown } from "react-icons/sl";
+
+
+
+const Combobox = ({ title, options ,defaultValue}) => {
+    const [isOpen, setIsOpen] = useState(false); 
+    const [selectedOption, setSelectedOption] = useState(defaultValue); 
+  
+    const toggleDropdown = () => {
+      setIsOpen(!isOpen);
+    };
+
+    const selectOption = (option) => {
+      setSelectedOption(option);
+      setIsOpen(false); 
+    };
+  
     return (
-        <div>
-            {/* Header */}
-            <div className="flex justify-between items-center mb-4">
-                <div className="flex gap-3">
-                    <button className="text-sm hover:underline">Resetear</button>
-                    <button className="text-sm bg-themePage text-white px-2 py-1 rounded hover:bg-themePage/80">
-                        Aplicar
-                    </button>
-                </div>
-            </div>
-
-            {/* Date Range */}
-            <div className="mb-4">
-                <label className="block font-semibold text-sm mb-2">Rango de fechas</label>
-                <div className="flex flex-col">
-                    <input
-                        type="date"
-                        className="border p-1 rounded-lg w-full shadow-sm"
-                        defaultValue="2014-01-01"
-                    />
-                    <span className="text-center">-</span>
-                    <input
-                        type="date"
-                        className="border p-1 rounded-lg w-full shadow-sm"
-                        defaultValue="2016-01-01"
-                    />
-                </div>
-            </div>
-
-            {/* Interval */}
-            <div className="mb-4">
-                <label className="block font-semibold text-sm mb-2">Intervalos</label>
-                <div className="flex flex-col gap-2">
-                    <label className="flex items-center">
-                        <input
-                            type="radio"
-                            name="interval"
-                            value="anual"
-                            className="mr-2"
-                        />
-                        Anual
-                    </label>
-                    <label className="flex items-center">
-                        <input
-                            type="radio"
-                            name="interval"
-                            value="mensual"
-                            className="mr-2"
-                            defaultChecked
-                        />
-                        Mensual
-                    </label>
-                    <label className="flex items-center">
-                        <input
-                            type="radio"
-                            name="interval"
-                            value="trimestral"
-                            className="mr-2"
-                        />
-                        Trimestral
-                    </label>
-                </div>
-            </div>
-
-            {/* Filtro adicional */}
-            <div>
-                <label className="block font-semibold text-sm mb-2">Filtro adicional</label>
-                <div className="flex flex-col gap-2">
-                    <label className="flex items-center">
-                        <input
-                            type="checkbox"
-                            name="filtro_adicional"
-                            className="mr-2"
-                        />
-                        Opcion 1
-                    </label>
-                    <label className="flex items-center">
-                        <input
-                            type="checkbox"
-                            name="filtro_adicional"
-                            className="mr-2"
-                            
-                        />
-                        Opcion 2
-                    </label>
-                    <label className="flex items-center">
-                        <input
-                            type="checkbox"
-                            name="filtro_adicional"
-                            className="mr-2"
-                        />
-                        Opcion 3
-                    </label>
-                </div>
-            </div>
-
-
+      <div className="relative flex items-center">
+        <header className="px-2 text-lg">
+            <h4>{title}: </h4>
+        </header>
+        <div className="basis-64 relative">
+        <button
+          onClick={toggleDropdown}
+          className="flex gap-2 items-center justify-center"
+        >
+          {selectedOption} <SlArrowDown className="scale-125" />
+        </button>
+  
+        {isOpen && (
+          <ul className="absolute bg-white shadow-lg rounded-lg mt-0.5 w-full z-10">
+            {options.map((option, index) => (
+              <li
+                key={index}
+                onClick={() => selectOption(option)}
+                className="p-2 transition duration-500 hover:bg-themePage hover:text-white cursor-pointer"
+              >
+                {option}
+              </li>
+            ))}
+          </ul>
+        )}
         </div>
+      </div>
+    );
+  };
+
+export default function Filtros({ title }) {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
+    return (
+        <main className="">
+            <section className="flex justify-center gap-9">
+                <header className="flex gap-2 justify-center items-center">
+                    <h2 className="text-center"><CiFilter className="scale-150 text-3xl"/></h2>
+                    <h2 className="text-base font-semibold text-center">{title}</h2>
+                </header>
+                <form className="" onSubmit={handleSubmit}>
+                    <div className="flex gap-3">
+                        <Combobox title="Sucursal" options={['San Miguel']} defaultValue="Los Cerros" />
+                        <Combobox title="Año" options={['2021', '2022', '2023']} defaultValue="2024" />
+                        <button className="bg-themePage rounded-xl p-2 flex gap-2 items-center justify-center  text-contrast
+                            hover:bg-themePageDark hover:text-contrast focus:outline-none font-semibold
+                        ">
+                            Aplicar <CiSearch  className="font-semibold scale-125"/>
+                        </button>
+                    </div>                    
+                </form>
+            </section>
+        </main>
     );
 }
