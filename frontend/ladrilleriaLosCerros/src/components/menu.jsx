@@ -42,7 +42,7 @@ export function Menu() {
           <div className='flex gap-2 items-center'>Username <CiSettings  className='scale-150'/></div>
         </footer>
       </aside>
-      <section className='flex flex-col gap-2 px-4 py-5'>
+      <section className='overflow-scroll p-2'>
        <Panel />
       </section>
     </main>
