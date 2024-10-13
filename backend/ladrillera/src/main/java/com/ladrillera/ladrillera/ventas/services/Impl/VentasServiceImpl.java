@@ -44,7 +44,6 @@ public class VentasServiceImpl implements VentasService {
         return ventasRepository.findByClienteId(clienteId); // Llama al repositorio para buscar ventas por clienteId
     }
 
-
     // Método para contar ventas por cliente en un día específico
     @Override
     public long contarVentasPorClientePorDia(Long clienteId, LocalDate fecha) {
@@ -148,14 +147,11 @@ public class VentasServiceImpl implements VentasService {
         return mensaje.toString();
     }
 
-
-
-
     // Nuevos metodos para las ventas
 
     @Override
-    public double calcularPromedioVentasPorMes(int mes, int anio) {
-        List<Ventas> ventasDelMes = ventasRepository.obtenerVentasPorMes(mes, anio);
+    public double calcularPromedioVentasPorMes(String sucursal, int mes, int anio) {
+        List<Ventas> ventasDelMes = ventasRepository.obtenerVentasPorSucursalYMes(mes, anio, sucursal);
 
         // Sumar el total de las ventas del mes
         BigDecimal totalVentas = ventasDelMes.stream()
@@ -165,13 +161,12 @@ public class VentasServiceImpl implements VentasService {
         int cantidadVentas = ventasDelMes.size();
 
         if (cantidadVentas == 0) {
-            return 0;
+            return 0; // O podrías lanzar una excepción personalizada
         }
 
         // Calcular el promedio (total ventas / cantidad de ventas)
         BigDecimal promedio = totalVentas.divide(BigDecimal.valueOf(cantidadVentas), RoundingMode.HALF_UP);
 
-        // Convertir a double si es necesario
         return promedio.doubleValue();
     }
 
@@ -203,9 +198,10 @@ public class VentasServiceImpl implements VentasService {
     }
 
     @Override
-    public List<Map<String, Object>> obtenerTopTresClientesPorVentas() {
+    public List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, int mes, int anio) {
         Pageable topTres = PageRequest.of(0, 3);
-        List<Map<String, Object>> topClientes = ventasRepository.findTopClientesPorVentas(topTres);
+        List<Map<String, Object>> topClientes = ventasRepository.findTopClientesPorVentas(sucursal, mes, anio, topTres);
+
         for (Map<String, Object> cliente : topClientes) {
             Long clienteId = ((Number) cliente.get("clienteId")).longValue();
             Optional<Clientes> clienteInfo = clientesRepository.findById(clienteId);
@@ -215,4 +211,24 @@ public class VentasServiceImpl implements VentasService {
 
         return topClientes;
     }
+
+    @Override
+    public List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, int mes, int anio) {
+        Pageable topTres = PageRequest.of(0, 3);
+        List<Map<String, Object>> topProductos = ventasRepository.findTopProductosPorVentas(sucursal, mes, anio,
+                topTres);
+
+        for (Map<String, Object> producto : topProductos) {
+            Long productoId = ((Number) producto.get("productoId")).longValue();
+            Optional<Productos> productoInfo = productosRepository.findById(productoId);
+
+            productoInfo.ifPresent(info -> {
+                producto.put("nombre", info.getNombre());
+                producto.put("descripcion", info.getDescripcion());
+            });
+        }
+
+        return topProductos;
+    }
+
 }

@@ -54,16 +54,11 @@ public class VentasController {
         return ventasService.contarVentasPorClientePorAnio(clienteId, anio);
     }
 
-
-
     // Endpoint para verificar la posibilidad de compra
     @GetMapping("/verificar/{clienteId}")
     public String verificarPosibilidadDeCompra(@PathVariable Long clienteId) {
         return ventasService.verificarPosibilidadDeCompra(clienteId);
     }
-
-
-
 
     // Endpoint para las ventas de las sucursales en un año
     @GetMapping("/contar/sucursal/anio")
@@ -80,15 +75,27 @@ public class VentasController {
 
     // Método para obtener el promedio de ventas por mes
     @GetMapping("/promedio/mes")
-    public double promedioVentasPorMes(@RequestParam int mes, @RequestParam int anio) {
-        // Lógica para calcular el promedio de ventas por mes
-        return ventasService.calcularPromedioVentasPorMes(mes, anio);
+    public double promedioVentasPorMes(@RequestParam String sucursal, @RequestParam int mes, @RequestParam int anio) {
+        return ventasService.calcularPromedioVentasPorMes(sucursal, mes, anio);
     }
 
+    // Metodo para obtener los clientes con mas ventas filtrado
     @GetMapping("/top-clientes")
-    public ResponseEntity<List<Map<String, Object>>> obtenerTopTresClientesPorVentas() {
-        List<Map<String, Object>> topClientes = ventasService.obtenerTopTresClientesPorVentas();
+    public ResponseEntity<List<Map<String, Object>>> obtenerTopTresClientesPorVentas(
+            @RequestParam String sucursal,
+            @RequestParam int mes,
+            @RequestParam int anio) {
+
+        List<Map<String, Object>> topClientes = ventasService.obtenerTopTresClientesPorVentas(sucursal, mes, anio);
         return ResponseEntity.ok(topClientes);
     }
 
+    @GetMapping("/top-productos")
+    public ResponseEntity<List<Map<String, Object>>> getTopProductos(
+            @RequestParam String sucursal,
+            @RequestParam int mes,
+            @RequestParam int anio) {
+        List<Map<String, Object>> topProductos = ventasService.obtenerTopTresProductosPorVentas(sucursal, mes, anio);
+        return ResponseEntity.ok(topProductos);
+    }
 }
