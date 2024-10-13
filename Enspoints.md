@@ -54,9 +54,10 @@ Uso del ?: Separa la ruta de los parámetros de consulta.
 Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
 
 PROMEDIO DE VENTAS POR MES
-http://localhost:8080/api/ventas/promedio/mes?mes=06&anio=2023
+http://localhost:8080/api/ventas/promedio/mes?sucursal=sede sur&mes=10&anio=2024
 
 Parametros en orden:
+@RequestParam(sucursal): Nombre de la sucursal
 @RequestParam(mes): Numero del mes despues del ?
 @RequestParam(anio): Numero del anio
 Uso del ?: Separa la ruta de los parámetros de consulta.
