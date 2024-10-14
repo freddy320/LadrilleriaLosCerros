@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.math.BigDecimal;
 
 @Repository
@@ -51,47 +50,41 @@ public interface VentasRepository extends JpaRepository<Ventas, Long> {
 
         // Metodo para agrupar las ventas de los clientes filtrado por sucursal, mes y
         // anio
-        @Query("SELECT new map(v.clienteId as clienteId, COUNT(v) as cantidadVentas) " +
-                        "FROM Ventas v " +
-                        "WHERE v.sede = :sede AND YEAR(v.fecha) = :anio " +
-                        "GROUP BY v.clienteId " +
-                        "ORDER BY COUNT(v) DESC")
-        List<Map<String, Object>> findTopClientesPorVentasTodosMeses(
-                        @Param("sede") String sede,
-                        @Param("anio") int anio,
-                        Pageable pageable);
-
-        @Query("SELECT new map(v.clienteId as clienteId, COUNT(v) as cantidadVentas) " +
-                        "FROM Ventas v " +
+        @Query("SELECT v.clienteId FROM Ventas v " +
                         "WHERE v.sede = :sede AND MONTH(v.fecha) = :mes AND YEAR(v.fecha) = :anio " +
                         "GROUP BY v.clienteId " +
                         "ORDER BY COUNT(v) DESC")
-        List<Map<String, Object>> findTopClientesPorVentas(
+        List<Long> findTopClientesIdsPorVentas(
                         @Param("sede") String sede,
                         @Param("mes") int mes,
+                        @Param("anio") int anio,
+                        Pageable pageable);
+
+        @Query("SELECT v.clienteId FROM Ventas v " +
+                        "WHERE v.sede = :sede AND YEAR(v.fecha) = :anio " +
+                        "GROUP BY v.clienteId " +
+                        "ORDER BY COUNT(v) DESC")
+        List<Long> findTopClientesIdsPorVentasTodosMeses(
+                        @Param("sede") String sede,
                         @Param("anio") int anio,
                         Pageable pageable);
 
         // Metodos para agrupar los productos mas vendidos filtrado
-        @Query("SELECT new map(v.productoId as productoId, SUM(v.cantidad) as cantidadVendida, SUM(v.totalVenta) as totalVentas) "
-                        +
-                        "FROM Ventas v " +
+        @Query("SELECT v.productoId FROM Ventas v " +
                         "WHERE v.sede = :sede AND MONTH(v.fecha) = :mes AND YEAR(v.fecha) = :anio " +
                         "GROUP BY v.productoId " +
                         "ORDER BY SUM(v.cantidad) DESC")
-        List<Map<String, Object>> findTopProductosPorVentas(
+        List<Long> findTopProductosIdsPorVentas(
                         @Param("sede") String sede,
                         @Param("mes") int mes,
                         @Param("anio") int anio,
                         Pageable pageable);
 
-        @Query("SELECT new map(v.productoId as productoId, SUM(v.cantidad) as cantidadVendida, SUM(v.totalVenta) as totalVentas) "
-                        +
-                        "FROM Ventas v " +
+        @Query("SELECT v.productoId FROM Ventas v " +
                         "WHERE v.sede = :sede AND YEAR(v.fecha) = :anio " +
                         "GROUP BY v.productoId " +
                         "ORDER BY SUM(v.cantidad) DESC")
-        List<Map<String, Object>> findTopProductosPorVentasTodosMeses(
+        List<Long> findTopProductosIdsPorVentasTodosMeses(
                         @Param("sede") String sede,
                         @Param("anio") int anio,
                         Pageable pageable);

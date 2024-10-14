@@ -69,21 +69,21 @@ public class VentasController {
 
     // Metodo para obtener los clientes con mas ventas filtrado
     @GetMapping("/top-clientes")
-    public ResponseEntity<List<Map<String, Object>>> obtenerTopTresClientesPorVentas(
+    public ResponseEntity<List<String>> obtenerNombresTopClientes(
             @RequestParam String sucursal,
             @RequestParam String mes,
             @RequestParam int anio) {
-        List<Map<String, Object>> topClientes = ventasService.obtenerTopTresClientesPorVentas(sucursal, mes, anio);
-        return ResponseEntity.ok(topClientes);
+        List<String> topClientesNombres = ventasService.obtenerTopTresClientesPorVentas(sucursal, mes, anio);
+        return ResponseEntity.ok(topClientesNombres);
     }
 
     @GetMapping("/top-productos")
-    public ResponseEntity<List<Map<String, Object>>> getTopProductos(
+    public ResponseEntity<List<String>> obtenerNombresTopProductos(
             @RequestParam String sucursal,
             @RequestParam String mes,
             @RequestParam int anio) {
-        List<Map<String, Object>> topProductos = ventasService.obtenerTopTresProductosPorVentas(sucursal, mes, anio);
-        return ResponseEntity.ok(topProductos);
+        List<String> topProductosNombres = ventasService.obtenerNombresTopTresProductosPorVentas(sucursal, mes, anio);
+        return ResponseEntity.ok(topProductosNombres);
     }
 
     @GetMapping("/anios")

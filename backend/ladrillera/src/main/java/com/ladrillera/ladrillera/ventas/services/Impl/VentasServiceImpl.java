@@ -23,6 +23,7 @@ import java.util.Locale;
 import java.util.LinkedHashMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.stream.Collectors;
 
 @Service
 public class VentasServiceImpl implements VentasService {
@@ -157,48 +158,45 @@ public class VentasServiceImpl implements VentasService {
 
     // Metodo para top clientes
     @Override
-    public List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio) {
+    public List<String> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio) {
         Pageable topTres = PageRequest.of(0, 3);
-        List<Map<String, Object>> topClientes;
+        List<Long> topClientesIds;
 
         if ("Todos".equalsIgnoreCase(mes)) {
-            topClientes = ventasRepository.findTopClientesPorVentasTodosMeses(sucursal, anio, topTres);
+            topClientesIds = ventasRepository.findTopClientesIdsPorVentasTodosMeses(sucursal, anio, topTres);
         } else {
             int mesNumerico = Integer.parseInt(mes);
-            topClientes = ventasRepository.findTopClientesPorVentas(sucursal, mesNumerico, anio, topTres);
+            topClientesIds = ventasRepository.findTopClientesIdsPorVentas(sucursal, mesNumerico, anio, topTres);
         }
 
-        for (Map<String, Object> cliente : topClientes) {
-            Long clienteId = ((Number) cliente.get("clienteId")).longValue();
-            Optional<Clientes> clienteInfo = clientesRepository.findById(clienteId);
-            clienteInfo.ifPresent(info -> cliente.put("nombre", info.getNombre()));
-        }
+        return topClientesIds.stream()
+                .map(clientesRepository::findById)
+                .filter(Optional::isPresent)
+                .map(cliente -> cliente.get().getNombre())
+                .collect(Collectors.toList());
 
-        return topClientes;
     }
 
+    // Metodo para top de los productos
     @Override
-    public List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, String mes, int anio) {
+    public List<String> obtenerNombresTopTresProductosPorVentas(String sucursal, String mes, int anio) {
+
         Pageable topTres = PageRequest.of(0, 3);
-        List<Map<String, Object>> topProductos;
+        List<Long> topProductosIds;
 
         if ("Todos".equalsIgnoreCase(mes)) {
-            topProductos = ventasRepository.findTopProductosPorVentasTodosMeses(sucursal, anio, topTres);
+            topProductosIds = ventasRepository.findTopProductosIdsPorVentasTodosMeses(sucursal, anio, topTres);
         } else {
             int mesNumerico = Integer.parseInt(mes);
-            topProductos = ventasRepository.findTopProductosPorVentas(sucursal, mesNumerico, anio, topTres);
+            topProductosIds = ventasRepository.findTopProductosIdsPorVentas(sucursal, mesNumerico, anio, topTres);
         }
 
-        for (Map<String, Object> producto : topProductos) {
-            Long productoId = ((Number) producto.get("productoId")).longValue();
-            Optional<Productos> productoInfo = productosRepository.findById(productoId);
-            productoInfo.ifPresent(info -> {
-                producto.put("nombre", info.getNombre());
-                producto.put("descripcion", info.getDescripcion());
-            });
-        }
+        return topProductosIds.stream()
+                .map(productosRepository::findById)
+                .filter(Optional::isPresent)
+                .map(producto -> producto.get().getNombre())
+                .collect(Collectors.toList());
 
-        return topProductos;
     }
 
     // Metodo para lista de años con ventas
