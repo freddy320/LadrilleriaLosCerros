@@ -21,8 +21,6 @@ public interface VentasService {
 
   Map<String, Object> calcularGananciasPromedioNumeroVentas(String sucursal, String mes, int anio);
 
-  long contarVentasPorSucursalPorMes(String sucursal, int mes, int anio);
-
   List<String> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio);
 
   List<String> obtenerNombresTopTresProductosPorVentas(String sucursal, String mes, int anio);

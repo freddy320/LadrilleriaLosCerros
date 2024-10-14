@@ -60,13 +60,6 @@ public class VentasController {
         return ventasService.verificarPosibilidadDeCompra(clienteId);
     }
 
-    // Endpoint para las cantidad de ventas de una sucursal en un mes
-    @GetMapping("/contar/sucursal/mes")
-    public long contarVentasPorSucursalPorMes(@RequestParam String sucursal, @RequestParam int mes,
-            @RequestParam int anio) {
-        return ventasService.contarVentasPorSucursalPorMes(sucursal, mes, anio);
-    }
-
     // Metodo para obtener los clientes con mas ventas filtrado
     @GetMapping("/top-clientes")
     public ResponseEntity<List<String>> obtenerNombresTopClientes(

@@ -148,14 +148,6 @@ public class VentasServiceImpl implements VentasService {
         return mensaje.toString();
     }
 
-    // Metodo para contar ventas por sucursal
-    @Override
-    public long contarVentasPorSucursalPorMes(String sucursal, int mes, int anio) {
-        LocalDate fechaInicio = LocalDate.of(anio, mes, 1);
-        LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
-        return ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
-    }
-
     // Metodo para top clientes
     @Override
     public List<String> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio) {

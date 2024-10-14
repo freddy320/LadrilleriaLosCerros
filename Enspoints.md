@@ -34,16 +34,6 @@ http://localhost:8080/api/ventas/verificar/2
 Unico parametro para Endpoint para el ciclo de ventas de un cliente
 @PathVariable id del cliente
 
-NUMERO DE VENTAS POR MES Y SUCURSAL
-http://localhost:8080/api/ventas/contar/sucursal/mes?sucursal=Sede Central&mes=06&anio=2023
-
-Parametros en orden:
-@RequestParam("sucursal"): Nombre de la sucursal despues del ?
-@RequestParam("mes"): Numero del mes
-@RequestParam("anio"): Numero del anio
-Uso del ?: Separa la ruta de los parámetros de consulta.
-Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
-
 TOP 3 DE CLIENTES CON MAS VENTAS
 http://localhost:8080/api/ventas/top-clientes?sucursal=sede norte&mes=todos&anio=2024
 sucursal
