@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-LadrilleraApplication<ladrillera>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.ladrillera.ladrillera.LadrilleraApplication",
+      "projectName": "ladrillera",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
