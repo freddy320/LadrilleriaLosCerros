@@ -77,6 +77,9 @@ sucursal
 mes
 anio
 
+Metodo para arrojar los años que hubo ventas
+http://localhost:8080/api/ventas/anios
+
 ## LISTADO DE PRODUCTOS VENDIDOS
 
 http://localhost:8080/api/productos/listar_ventas
