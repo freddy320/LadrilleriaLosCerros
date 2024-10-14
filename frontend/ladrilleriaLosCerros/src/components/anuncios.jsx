@@ -1,6 +1,7 @@
 import { CiBullhorn } from "react-icons/ci";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { PiNotePencilThin } from "react-icons/pi";
+import { CiSaveUp2 } from "react-icons/ci";
 import { useState } from "react";
 
 const Item = ({icon,title,desciption})=>{
@@ -13,6 +14,7 @@ const Item = ({icon,title,desciption})=>{
 
     const handleEditDesciption = (e) => {
         setNewDesciption(e.target.value);
+        setEdit(!edit);
     }
 
     return(
@@ -21,12 +23,14 @@ const Item = ({icon,title,desciption})=>{
                 {icon} 
             </div>
             <div className="w-full text-center">
-                <h2 className="text-3xl font-medium flex gap-2 items-center justify-center">{title} <PiNotePencilThin className="cursor-pointer" onClick={handleEdit} /></h2>
-                {edit ? (
-                    <input className="w-full h-full" type="text" value={newDesciption} onChange={handleEditDesciption} />
-                ) : (
+                <h2 className="text-3xl font-medium flex gap-2 items-center justify-center">{title} <PiNotePencilThin className="cursor-pointer" onClick={handleEdit} />{edit?
+                <CiSaveUp2 className="cursor-pointer" onClick={handleEditDesciption}/> :null
+            }</h2>
+                {edit ? 
+                    <textarea className="w-full h-full text-center focus:outline-none" type="text" id="text" value={newDesciption} />
+                 : 
                     <p className="opacity-65">{newDesciption}</p>
-                )}
+                }
             </div>
         </div>
     )
