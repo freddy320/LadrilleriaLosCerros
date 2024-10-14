@@ -74,4 +74,8 @@ public interface VentasRepository extends JpaRepository<Ventas, Long> {
                         @Param("anio") int anio,
                         Pageable pageable);
 
+        // Metodo para arrojar los años que hubo venta
+        @Query("SELECT DISTINCT YEAR(v.fecha) FROM Ventas v ORDER BY YEAR(v.fecha) DESC")
+        List<Integer> findDistinctYears();
+
 }

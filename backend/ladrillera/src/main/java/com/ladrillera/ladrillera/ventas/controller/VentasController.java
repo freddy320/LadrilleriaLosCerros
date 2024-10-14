@@ -98,4 +98,10 @@ public class VentasController {
         List<Map<String, Object>> topProductos = ventasService.obtenerTopTresProductosPorVentas(sucursal, mes, anio);
         return ResponseEntity.ok(topProductos);
     }
+
+    @GetMapping("/anios")
+    public ResponseEntity<List<Integer>> getAniosConVentas() {
+        List<Integer> anios = ventasService.obtenerAniosConVentas();
+        return ResponseEntity.ok(anios);
+    }
 }
