@@ -44,34 +44,14 @@ Parametros en orden:
 Uso del ?: Separa la ruta de los parámetros de consulta.
 Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
 
-NUMERO VENTAS POR AÑO Y SURCUSAL
-http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=sede cali&anio=2023
-
-Parametros en orden:
-@RequestParam("sucursal"): Nombre de la sucursal despues del ?
-@RequestParam("anio"): Numero del anio
-Uso del ?: Separa la ruta de los parámetros de consulta.
-Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
-
-PROMEDIO DE VENTAS POR MES
-http://localhost:8080/api/ventas/promedio/mes?sucursal=sede sur&mes=10&anio=2024
-
-Parametros en orden:
-@RequestParam(sucursal): Nombre de la sucursal
-@RequestParam(mes): Numero del mes despues del ?
-@RequestParam(anio): Numero del anio
-Uso del ?: Separa la ruta de los parámetros de consulta.
-Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
-
 TOP 3 DE CLIENTES CON MAS VENTAS
-http://localhost:8080/api/ventas/top-clientes?sucursal=sede norte&mes=10&anio=2024
-Parametros
+http://localhost:8080/api/ventas/top-clientes?sucursal=sede norte&mes=todos&anio=2024Parametros
 sucursal
 mes
 anio
 
 TOP 3 PRODUCTOS MAS VENDIDOS POR SUCURSAL, MES Y ANIO
-http://localhost:8080/api/ventas/top-productos?sucursal=sede norte&mes=10&anio=2024
+http://localhost:8080/api/ventas/top-productos?sucursal=sede norte&mes=todos&anio=2024
 Parametros
 sucursal
 mes
@@ -79,6 +59,12 @@ anio
 
 Metodo para arrojar los años que hubo ventas
 http://localhost:8080/api/ventas/anios
+
+Metodo para arrojar las ventas por anio, mes y sucurasl
+http://localhost:8080/api/ventas/contar/sucursal/mes/anio?sucursal=Sede norte&mes=todos&anio=2024
+
+Promedio ventas
+http://localhost:8080/api/ventas/estadisticas?sucursal=Sede norte&mes=todos&anio=2024
 
 ## LISTADO DE PRODUCTOS VENDIDOS
 
