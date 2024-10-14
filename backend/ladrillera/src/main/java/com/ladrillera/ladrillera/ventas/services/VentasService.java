@@ -23,9 +23,9 @@ public interface VentasService {
 
   long contarVentasPorSucursalPorMes(String sucursal, int mes, int anio);
 
-  List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio);
+  List<String> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio);
 
-  List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, String mes, int anio);
+  List<String> obtenerNombresTopTresProductosPorVentas(String sucursal, String mes, int anio);
 
   List<Integer> obtenerAniosConVentas();
 

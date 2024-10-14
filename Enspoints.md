@@ -45,7 +45,7 @@ Uso del ?: Separa la ruta de los parámetros de consulta.
 Uso del &: Separa múltiples parámetros de consulta (si hubiera más).
 
 TOP 3 DE CLIENTES CON MAS VENTAS
-http://localhost:8080/api/ventas/top-clientes?sucursal=sede norte&mes=todos&anio=2024Parametros
+http://localhost:8080/api/ventas/top-clientes?sucursal=sede norte&mes=todos&anio=2024
 sucursal
 mes
 anio
