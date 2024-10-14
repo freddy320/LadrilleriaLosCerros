@@ -23,16 +23,19 @@ const Combobox = ({ title, options ,defaultValue}) => {
         <header className="px-2 text-lg">
             <h4>{title}: </h4>
         </header>
-        <div className="basis-64 relative">
+        <div className="relative">
         <button
           onClick={toggleDropdown}
-          className="flex gap-2 items-center justify-center"
+          className="flex gap-2 items-center justify-center basis-48"
         >
           {selectedOption} <SlArrowDown className="scale-125" />
         </button>
   
         {isOpen && (
-          <ul className="absolute bg-white shadow-lg rounded-lg mt-0.5 w-full z-10">
+          <ul className="absolute bg-white shadow-lg rounded-lg mt-0.5 w-max z-10">
+            <li  onClick={() => selectOption(defaultValue)} className="p-2 transition duration-500 hover:bg-themePage hover:text-white cursor-pointer">
+              {defaultValue}
+            </li>
             {options.map((option, index) => (
               <li
                 key={index}
@@ -62,9 +65,10 @@ export default function Filtros({ title }) {
                     <h2 className="text-base font-semibold text-center">{title}</h2>
                 </header>
                 <form className="" onSubmit={handleSubmit}>
-                    <div className="flex gap-3">
+                    <div className="flex gap-5">
                         <Combobox title="Sucursal" options={['San Miguel']} defaultValue="Los Cerros" />
-                        <Combobox title="Año" options={['2021', '2022', '2023']} defaultValue="2024" />
+                        <Combobox title="Año" options={[2021, 2022, 2023]} defaultValue="2024" />
+                        <Combobox title="Mes" options={['Enero', 'Febrero', 'Marzo','Abril','Mayo','Junio','Julio','Septiembre','Octubre','Noviembre']} defaultValue="Todos" />
                         <button className="bg-themePage rounded-xl p-2 flex gap-2 items-center justify-center  text-contrast
                             hover:bg-themePageDark hover:text-contrast focus:outline-none font-semibold
                         ">

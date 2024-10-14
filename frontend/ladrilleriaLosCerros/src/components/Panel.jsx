@@ -10,17 +10,14 @@ ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 
 const LineChart = () => {
-    const [result, setResult] = useState([]);
+    const [result, setResult] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=Sucursal1&anio=2024');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                console.log(data);
+                const res = await fetch("http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=Sede%20Norte&anio=2024");
+                const data = await res.json();
+                console.log(typeof data);
                 setResult(data);
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -29,35 +26,35 @@ const LineChart = () => {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        console.log(result);
-    }, [result]);
+    if (!result) {
+        return <p>Cargando datos...</p>;
+    }
+
+    const labels = Object.keys(result);
+    const data = Object.values(result);
 
     return (
         <div className="bg-contrast p-4 rounded-xl shadow-lg h-96 w-full">
-            {Array.isArray(result) && result.length > 0 ? (
-                <Line
-                    data={{
-                        labels: result.map((item) => item.mes),
-                        datasets: [
-                            {
-                                label: 'Ventas',
-                                data: result.map((item) => item.cantidad),
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                borderWidth: 1,
-                            }
-                        ]
-                    }}
-                    options={{ responsive: true, maintainAspectRatio: false }}
-                    className="w-full"
-                />
-            ) : (
-                <p>Cargando datos...</p>
-            )}
+            <Line
+                data={{
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Ventas',
+                            data: data,
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                        }
+                    ]
+                }}
+                options={{ responsive: true, maintainAspectRatio: false }}
+                className="w-full"
+            />
         </div>
     );
 };
+
 
 const ItemPanel = ({ title, resultText, result, icon }) => {
     return (
