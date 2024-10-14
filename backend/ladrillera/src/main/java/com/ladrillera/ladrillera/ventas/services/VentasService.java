@@ -27,4 +27,6 @@ public interface VentasService {
 
   List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, int mes, int anio);
 
+  List<Integer> obtenerAniosConVentas();
+
 }

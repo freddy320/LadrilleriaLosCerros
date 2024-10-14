@@ -231,4 +231,9 @@ public class VentasServiceImpl implements VentasService {
         return topProductos;
     }
 
+    @Override
+    public List<Integer> obtenerAniosConVentas() {
+        return ventasRepository.findDistinctYears();
+    }
+
 }
