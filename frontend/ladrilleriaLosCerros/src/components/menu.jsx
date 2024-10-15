@@ -30,7 +30,7 @@ export function Menu() {
   };
 
   return (
-    <main className="h-screen grid grid-cols-home font-Montserrat bg-background">
+    <main className="h-screen grid grid-cols-home font-Montserrat bg-background ">
       <aside className="flex flex-col justify-between gap-3 rounded-s bg-contrast p-1 shadow-lg">
         <header className="flex flex-col gap-5">
           <div className="pinture-container-custom">
@@ -52,7 +52,7 @@ export function Menu() {
           <div className='flex gap-2 items-center'>Username <CiSettings className='scale-150' /></div>
         </footer>
       </aside>
-      <section className='overflow-scroll p-2'>
+      <section className='overflow-scroll '>
         {opcion === 'panel' && <Panel />}
         {opcion === 'anuncios' && <Anuncios />}
       </section>
