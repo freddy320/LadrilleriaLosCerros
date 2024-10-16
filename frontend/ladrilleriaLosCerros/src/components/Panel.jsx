@@ -9,29 +9,10 @@ ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip,
 
 
 
-const LineChart = () => {
-    const [result, setResult] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch("http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=Sede%20Norte&anio=2024");
-                const data = await res.json();
-                console.log(typeof data);
-                setResult(data);
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        };
-        fetchData();
-    }, []);
-
-    if (!result) {
-        return <p>Cargando datos...</p>;
-    }
-
-    const labels = Object.keys(result);
-    const data = Object.values(result);
+const LineChart = ({resultData}) => {
+    
+    const labels = resultData.labels;
+    const data = resultData.data;
 
     return (
         <div className="bg-contrast p-4 rounded-xl shadow-lg h-96 w-full">
@@ -96,6 +77,51 @@ const Card = ({ icon, name }) => {
 }
 
 export default function Panel() {
+    const result = useState(
+        {
+            sucursal: 'los cerros',
+            anio: '2024',
+            mes: 'Todos'
+        });
+
+    const [data, setData] = useState({
+        resumenVentas: {
+            totalRecudo: 1000,
+            promedio: 50.5,
+            ventas: 1000
+        },
+        clientesPincipales: [
+            { nombre: 'Cliente1' },
+            { nombre: 'Cliente2' },
+            { nombre: 'Cliente3' }
+        ],
+        productosPrincipales: [
+            { nombre: 'Producto1' },
+            { nombre: 'Producto2' },
+            { nombre: 'Producto3' }
+        ],
+        informeVentas: {
+            labels: [],
+            data: []
+        }
+
+    });
+
+    useEffect(()=>{
+        const copyData = {...data};
+        const fetchData = async()=>{
+            try {
+                const infomeVentas = await axios.get(`http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=${result.sucursal}&anio=${result.anio}`);
+                copyData.informeVentas.labels = Object.keys(infomeVentas.data);
+                copyData.informeVentas.data = Object.values(infomeVentas.data);
+                setData(copyData);
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+        fetchData();
+    },[])
+
     return (
         <main className=" grid p-2 gap-3 ">
 
@@ -104,7 +130,7 @@ export default function Panel() {
             </section>
 
             <section className='flex gap-8 flex-wrap justify-center bg-contrast p-4 rounded-xl shadow-lg'>
-                <ItemPanel title="Ganancias" resultText="$ 50 en el último mes" result="$ 1000" icon={<CiBadgeDollar className="w-12 h-12" />} />
+                <ItemPanel title="Recaudado" resultText="$ 50 en el último mes" result="$ 1000" icon={<CiBadgeDollar className="w-12 h-12" />} />
                 <ItemPanel title="Promedio" resultText="+ 1.5 de ventas en el último mes" result="50.5" icon={<CiCalculator1 className="w-12 h-12" />} />
                 <ItemPanel title="Ventas" resultText="+ 50 ventas en el último mes" result="1000" icon={<CiShoppingCart className="w-12 h-12" />} />
             </section>
@@ -115,7 +141,7 @@ export default function Panel() {
                         <header className="flex justify-between items-baseline">
                             <h2 className=" text-xl font-medium">Informe general de ventas</h2>
                         </header>
-                        <LineChart/>
+                        <LineChart   data={data} />
                     </div>
 
                 </div>
