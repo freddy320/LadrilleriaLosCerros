@@ -22,7 +22,7 @@ const Combobox = ({ title, options ,defaultValue}) => {
     return (
       <div className="relative flex items-center">
         <header className="px-2 text-lg">
-            <h4>{title}: </h4>
+            <h4 className="font-medium">{title}: </h4>
         </header>
         <div className="relative">
         <button
@@ -74,7 +74,7 @@ export default function Filtros({ title }) {
             <section className="flex justify-center gap-9">
                 <header className="flex gap-2 justify-center items-center">
                     <h2 className="text-center"><CiFilter className="scale-150 text-3xl"/></h2>
-                    <h2 className="text-base font-semibold text-center">{title}</h2>
+                    <h2 className="text-base font-semibold font-Montserrat text-center">{title}</h2>
                 </header>
                 <form className="" onSubmit={handleSubmit}>
                     <div className="flex gap-5">

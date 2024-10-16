@@ -64,7 +64,7 @@ const ItemPanel = ({ title, resultText, result, icon }) => {
             </div>
             <div className="basis-36 text-center">
                 <h5 className="text-lg opacity-65">{title}</h5>
-                <h2 className="text-3xl font-extrabold px-1">{result}</h2>
+                <h2 className="text-3xl font-extrabold font-Montserrat px-1">{result}</h2>
                 <h6 className="text-sm opacity-65 font-bold text-center">{resultText}</h6>
             </div>
         </div>
@@ -113,7 +113,7 @@ export default function Panel() {
                 <div className='bg-contrast px-5 py-2 rounded-xl shadow-lg grid'>
                     <div>
                         <header className="flex justify-between items-baseline">
-                            <h2 className=" text-xl font-medium">Informe general de ventas</h2>
+                            <h2 className=" text-xl font-semibold">Informe general de ventas</h2>
                         </header>
                         <LineChart/>
                     </div>
