@@ -8,6 +8,7 @@ import { CiMoneyCheck1 } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { TfiAnnouncement } from "react-icons/tfi";
 import Panel from './Panel';
+import { Ventas } from './Ventas';
 
 
 const Item = ({children}) => {
@@ -43,7 +44,8 @@ export function Menu() {
         </footer>
       </aside>
       <section className='overflow-scroll p-2'>
-       <Panel />
+       {/* <Panel /> */}
+       <Ventas />
       </section>
     </main>
   );
