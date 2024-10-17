@@ -1,10 +1,10 @@
 import { CiBullhorn } from "react-icons/ci";
-import { MdOutlineMailOutline } from "react-icons/md";
+import { CiMail } from "react-icons/ci";
 import { PiNotePencilThin } from "react-icons/pi";
 import { CiSaveUp2 } from "react-icons/ci";
 import { useState } from "react";
 import { CiTurnL1 } from "react-icons/ci";
-import { MdOutlineCancel } from "react-icons/md";
+import { CiSquareRemove } from "react-icons/ci";
 
 
 
@@ -41,7 +41,7 @@ const Item = ({ icon, title, description }) => {
 
     return (
         <div
-            className="flex flex-wrap p-2 bg-contrast rounded-xl shadow-xl items-center justify-center"
+            className="flex flex-wrap p-2 bg-contrast rounded-xl shadow-xl items-center justify-center hover:cursor-pointer"
             onClick={() => handleActive(true)}
         >
             <header>
@@ -54,26 +54,29 @@ const Item = ({ icon, title, description }) => {
             </header>
             {active ? (
                 <main className="absolute w-full h-full top-0 right-0 grid items-center justify-center">
-                    <div className="bg-contrast h-96 w-80 z-50 rounded-xl p-2 shadow-xl" onClick={(e) => e.stopPropagation()}>
+                    <div className="bg-contrast h-min w-96 z-50 rounded-xl px-2 py-4 shadow-xl grid gap-2 transition duration-500" onClick={(e) => e.stopPropagation()}>
                         <header className="flex items-center justify-between text-xl">
                             <h2 className="font-semibold">{title}</h2>
                             <div className="flex gap-2">
-                                {edit ? (<MdOutlineCancel className="opacity-70"  onClick={handleCancelEdit}/>) : null}
-                                <PiNotePencilThin className="cursor-pointer" onClick={handleEdit} />
-                                <CiTurnL1 className="cursor-pointer" onClick={closeModal} />
+                                {edit ? (<CiSquareRemove className="cursor-pointer transition duration-500 hover:scale-110"  onClick={handleCancelEdit}/>) : null}
+                                <PiNotePencilThin className="cursor-pointer transition duration-500 hover:scale-110" onClick={handleEdit} />
+                                <CiTurnL1 className="cursor-pointer transition duration-500 hover:scale-110" onClick={closeModal} />
                             </div>
                         </header>
+                        <div className="flex gap items-center gap-2">
+                            <CiMail  className="scale-125" /> <input type="text" value={'CorreoEjemplo@gmail.com'} />
+                        </div>
                         {edit ? (
                             <section>
                                 <textarea
                                 id="text"
-                                className="w-full h-40 p-2 rounded-lg focus:outline-none"
+                                className="w-full px-2 h-20 rounded-lg focus:outline-none resize-none text-justify scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-bg-themePage"
                                 defaultValue={description}
                                 onChange={(e) => setNewDescription(e.target.value)}
                             ></textarea>
                             <div className="flex justify-center">
-                                {edit ? <button className="p-2 flex gap-2 bg-themePage rounded-xl text-contrast items-center">
-                                    Guardar<CiSaveUp2 className="scale-150" onClick={handleSaveEdit} />
+                                {edit ? <button className="p-2 flex gap-2  bg-themePage rounded-xl text-contrast items-center" onClick={handleSaveEdit}>
+                                    Guardar<CiSaveUp2 className="scale-150" />
                                 </button> : null
                                 }
                             </div>
