@@ -52,7 +52,7 @@ export function Menu() {
           <div className='flex gap-2 items-center'>Username <CiSettings className='scale-150' /></div>
         </footer>
       </aside>
-      <section className='overflow-scroll '>
+      <section className='overflow-y-scroll scroll-smooth '>
         {opcion === 'panel' && <Panel />}
         {opcion === 'anuncios' && <Anuncios />}
       </section>
