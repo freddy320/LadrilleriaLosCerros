@@ -4,6 +4,7 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJs, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title } from "chart.js";
 import Filtros from "./panel/Filtros";
 import { useEffect, useState } from "react";
+import axios from 'axios';
 ChartJs.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Title);
 
 
@@ -43,10 +44,9 @@ const ItemPanel = ({ title, resultText, result, icon }) => {
             <div className={`w-24 h-24 p-1 rounded-full flex items-center justify-center bg-themePage text-contrast`}>
                 {icon}
             </div>
-            <div className="basis-36 text-center">
+            <div className="basis-48 text-center">
                 <h5 className="text-lg opacity-65">{title}</h5>
                 <h2 className="text-3xl font-extrabold font-Montserrat px-1">{result}</h2>
-                <h6 className="text-sm opacity-65 font-bold text-center">{resultText}</h6>
             </div>
         </div>
     )
@@ -76,19 +76,20 @@ const Card = ({ icon, name }) => {
     )
 }
 
+
 export default function Panel() {
-    const result = useState(
-        {
-            sucursal: 'los cerros',
-            anio: '2024',
-            mes: 'Todos'
-        });
+
+    const [params, setParams] = useState({
+        sucursal: 'Sede norte',
+        anio: '2024',
+        mes: 'Todos'
+    });
 
     const [data, setData] = useState({
         resumenVentas: {
-            totalRecudo: 1000,
-            promedio: 50.5,
-            ventas: 1000
+            Ganancias: 1000,
+            PromedioVentas: 50.5,
+            NumeroVentas: 1000
         },
         clientesPincipales: [
             { nombre: 'Cliente1' },
@@ -111,9 +112,15 @@ export default function Panel() {
         const copyData = {...data};
         const fetchData = async()=>{
             try {
-                const infomeVentas = await axios.get(`http://localhost:8080/api/ventas/contar/sucursal/anio?sucursal=${result.sucursal}&anio=${result.anio}`);
+                const infomeVentas = await axios.get(`http://localhost:8080/api/ventas/contar/sucursal/mes/anio?sucursal=${params.sucursal}&mes=${params.mes}&anio=${params.anio}`);
                 copyData.informeVentas.labels = Object.keys(infomeVentas.data);
                 copyData.informeVentas.data = Object.values(infomeVentas.data);
+                const infomeResumenVentas = await axios.get(`http://localhost:8080/api/ventas/estadisticas?sucursal=${params.sucursal}&mes=${params.mes}&anio=${params.anio}`);
+                copyData.resumenVentas = infomeResumenVentas.data;
+                const informeClientesPrincipales = await axios.get(`http://localhost:8080/api/ventas/top-clientes?sucursal=${params.sucursal}&mes=${params.mes}&anio=${params.anio}`);
+                copyData.clientesPincipales = informeClientesPrincipales.data;
+                const informeProductosPrincipales = await axios.get(`http://localhost:8080/api/ventas/top-productos?sucursal=${params.sucursal}&mes=${params.mes}&anio=${params.anio}`);
+                copyData.productosPrincipales = informeProductosPrincipales.data;
                 setData(copyData);
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -130,9 +137,9 @@ export default function Panel() {
             </section>
 
             <section className='flex gap-8 flex-wrap justify-center bg-contrast p-4 rounded-xl shadow-lg'>
-                <ItemPanel title="Recaudado" resultText="$ 50 en el último mes" result="$ 1000" icon={<CiBadgeDollar className="w-12 h-12" />} />
-                <ItemPanel title="Promedio" resultText="+ 1.5 de ventas en el último mes" result="50.5" icon={<CiCalculator1 className="w-12 h-12" />} />
-                <ItemPanel title="Ventas" resultText="+ 50 ventas en el último mes" result="1000" icon={<CiShoppingCart className="w-12 h-12" />} />
+                <ItemPanel title="Ganancias" result={data.resumenVentas.Ganancias} icon={<CiBadgeDollar className="text-5xl" />} />
+                <ItemPanel title="Promedio de Ventas" result={data.resumenVentas.PromedioVentas} icon={<CiCalculator1 className="text-5xl" />} />
+                <ItemPanel title="Numero de Ventas" result={data.resumenVentas.NumeroVentas} icon={<CiShoppingCart className="text-5xl" />} />
             </section>
 
             <section className='grid grid-cols-1   2xl:grid-cols-gridMenuGraficts gap-2'>
@@ -141,22 +148,26 @@ export default function Panel() {
                         <header className="flex justify-between items-baseline">
                             <h2 className=" text-xl font-semibold">Informe general de ventas</h2>
                         </header>
-                        <LineChart   data={data} />
+                        <LineChart resultData={data.informeVentas} />
                     </div>
 
                 </div>
 
                 <div className='bg-contrast px-5 py-2 rounded-xl shadow-lg grid grid-rows-2 items-center gap-1'>
                     <CardContainer title="Clientes Principales">
-                        <Card icon={<CiUser className="text-5xl" />} name="Cliente1" />
-                        <Card icon={<CiUser className="text-5xl" />} name="Cliente2" />
-                        <Card icon={<CiUser className="text-5xl" />} name="Cliente3" />
+                        {
+                            data.clientesPincipales.map((cliente, index) => (
+                                <Card key={index} icon={<CiUser className="text-5xl" />} name={cliente.nombre} />
+                            ))
+                        }
                     </CardContainer>
 
                     <CardContainer title="Productos Principales">
-                        <Card icon={<CiShoppingCart className="text-5xl" />} name="Producto1" />
-                        <Card icon={<CiShoppingCart className="text-5xl" />} name="Producto2" />
-                        <Card icon={<CiShoppingCart className="text-5xl" />} name="Producto3" />
+                        {
+                            data.productosPrincipales.map((producto, index) => (
+                                <Card key={index} icon={<CiShoppingCart className="text-5xl" />} name={producto.nombre} />
+                            ))
+                        }
                     </CardContainer>
                 </div>
             </section>
