@@ -60,43 +60,23 @@ public class VentasController {
         return ventasService.verificarPosibilidadDeCompra(clienteId);
     }
 
-    // Endpoint para las ventas de las sucursales en un año
-    @GetMapping("/contar/sucursal/anio")
-    public Map<String, Long> contarVentasPorSucursalPorMeses(@RequestParam String sucursal, @RequestParam int anio) {
-        return ventasService.contarVentasPorSucursal(sucursal, anio);
-    }
-
-    // Endpoint para las cantidad de ventas de una sucursal en un mes
-    @GetMapping("/contar/sucursal/mes")
-    public long contarVentasPorSucursalPorMes(@RequestParam String sucursal, @RequestParam int mes,
-            @RequestParam int anio) {
-        return ventasService.contarVentasPorSucursalPorMes(sucursal, mes, anio);
-    }
-
-    // Método para obtener el promedio de ventas por mes
-    @GetMapping("/promedio/mes")
-    public double promedioVentasPorMes(@RequestParam String sucursal, @RequestParam int mes, @RequestParam int anio) {
-        return ventasService.calcularPromedioVentasPorMes(sucursal, mes, anio);
-    }
-
     // Metodo para obtener los clientes con mas ventas filtrado
     @GetMapping("/top-clientes")
-    public ResponseEntity<List<Map<String, Object>>> obtenerTopTresClientesPorVentas(
+    public ResponseEntity<List<String>> obtenerNombresTopClientes(
             @RequestParam String sucursal,
-            @RequestParam int mes,
+            @RequestParam String mes,
             @RequestParam int anio) {
-
-        List<Map<String, Object>> topClientes = ventasService.obtenerTopTresClientesPorVentas(sucursal, mes, anio);
-        return ResponseEntity.ok(topClientes);
+        List<String> topClientesNombres = ventasService.obtenerTopTresClientesPorVentas(sucursal, mes, anio);
+        return ResponseEntity.ok(topClientesNombres);
     }
 
     @GetMapping("/top-productos")
-    public ResponseEntity<List<Map<String, Object>>> getTopProductos(
+    public ResponseEntity<List<String>> obtenerNombresTopProductos(
             @RequestParam String sucursal,
-            @RequestParam int mes,
+            @RequestParam String mes,
             @RequestParam int anio) {
-        List<Map<String, Object>> topProductos = ventasService.obtenerTopTresProductosPorVentas(sucursal, mes, anio);
-        return ResponseEntity.ok(topProductos);
+        List<String> topProductosNombres = ventasService.obtenerNombresTopTresProductosPorVentas(sucursal, mes, anio);
+        return ResponseEntity.ok(topProductosNombres);
     }
 
     @GetMapping("/anios")
@@ -104,4 +84,21 @@ public class VentasController {
         List<Integer> anios = ventasService.obtenerAniosConVentas();
         return ResponseEntity.ok(anios);
     }
+
+    @GetMapping("/contar/sucursal/mes/anio")
+    public Map<String, Long> contarVentasPorSucursalPorMeses(
+            @RequestParam String sucursal,
+            @RequestParam String mes,
+            @RequestParam int anio) {
+        return ventasService.contarVentasPorSucursal(sucursal, mes, anio);
+    }
+
+    @GetMapping("/estadisticas")
+    public Map<String, Object> calcularEstadisticasDeVentas(
+            @RequestParam String sucursal,
+            @RequestParam String mes,
+            @RequestParam int anio) {
+        return ventasService.calcularGananciasPromedioNumeroVentas(sucursal, mes, anio);
+    }
+
 }

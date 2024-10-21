@@ -14,8 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +21,9 @@ import java.util.Optional;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.LinkedHashMap;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.stream.Collectors;
 
 @Service
 public class VentasServiceImpl implements VentasService {
@@ -147,93 +148,137 @@ public class VentasServiceImpl implements VentasService {
         return mensaje.toString();
     }
 
-    // Nuevos metodos para las ventas
-
+    // Metodo para top clientes
     @Override
-    public double calcularPromedioVentasPorMes(String sucursal, int mes, int anio) {
-        List<Ventas> ventasDelMes = ventasRepository.obtenerVentasPorSucursalYMes(mes, anio, sucursal);
-
-        // Sumar el total de las ventas del mes
-        BigDecimal totalVentas = ventasDelMes.stream()
-                .map(Ventas::getTotalVenta)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        int cantidadVentas = ventasDelMes.size();
-
-        if (cantidadVentas == 0) {
-            return 0; // O podrías lanzar una excepción personalizada
-        }
-
-        // Calcular el promedio (total ventas / cantidad de ventas)
-        BigDecimal promedio = totalVentas.divide(BigDecimal.valueOf(cantidadVentas), RoundingMode.HALF_UP);
-
-        return promedio.doubleValue();
-    }
-
-    @Override
-    public Map<String, Long> contarVentasPorSucursal(String sucursal, int anio) {
-        Map<String, Long> ventasPorMes = new LinkedHashMap<>(); // Usar LinkedHashMap para mantener el orden
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM", new Locale("es")); // Formato en español
-
-        for (int mes = 1; mes <= 12; mes++) {
-            LocalDate fechaInicio = LocalDate.of(anio, mes, 1);
-            LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
-
-            long ventas = ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
-            String mesEnEspanol = fechaInicio.format(formatter); // Obtener el mes en español
-
-            // Agregar al mapa usando el nombre del mes en español
-            ventasPorMes.put(mesEnEspanol, ventas);
-        }
-
-        return ventasPorMes;
-    }
-
-    // Metodo para contar ventas por sucursal
-    @Override
-    public long contarVentasPorSucursalPorMes(String sucursal, int mes, int anio) {
-        LocalDate fechaInicio = LocalDate.of(anio, mes, 1);
-        LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
-        return ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
-    }
-
-    @Override
-    public List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, int mes, int anio) {
+    public List<String> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio) {
         Pageable topTres = PageRequest.of(0, 3);
-        List<Map<String, Object>> topClientes = ventasRepository.findTopClientesPorVentas(sucursal, mes, anio, topTres);
+        List<Long> topClientesIds;
 
-        for (Map<String, Object> cliente : topClientes) {
-            Long clienteId = ((Number) cliente.get("clienteId")).longValue();
-            Optional<Clientes> clienteInfo = clientesRepository.findById(clienteId);
-
-            clienteInfo.ifPresent(info -> cliente.put("nombre", info.getNombre()));
+        if ("Todos".equalsIgnoreCase(mes)) {
+            topClientesIds = ventasRepository.findTopClientesIdsPorVentasTodosMeses(sucursal, anio, topTres);
+        } else {
+            int mesNumerico = Integer.parseInt(mes);
+            topClientesIds = ventasRepository.findTopClientesIdsPorVentas(sucursal, mesNumerico, anio, topTres);
         }
 
-        return topClientes;
+        return topClientesIds.stream()
+                .map(clientesRepository::findById)
+                .filter(Optional::isPresent)
+                .map(cliente -> cliente.get().getNombre())
+                .collect(Collectors.toList());
+
     }
 
+    // Metodo para top de los productos
     @Override
-    public List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, int mes, int anio) {
+    public List<String> obtenerNombresTopTresProductosPorVentas(String sucursal, String mes, int anio) {
+
         Pageable topTres = PageRequest.of(0, 3);
-        List<Map<String, Object>> topProductos = ventasRepository.findTopProductosPorVentas(sucursal, mes, anio,
-                topTres);
+        List<Long> topProductosIds;
 
-        for (Map<String, Object> producto : topProductos) {
-            Long productoId = ((Number) producto.get("productoId")).longValue();
-            Optional<Productos> productoInfo = productosRepository.findById(productoId);
-
-            productoInfo.ifPresent(info -> {
-                producto.put("nombre", info.getNombre());
-                producto.put("descripcion", info.getDescripcion());
-            });
+        if ("Todos".equalsIgnoreCase(mes)) {
+            topProductosIds = ventasRepository.findTopProductosIdsPorVentasTodosMeses(sucursal, anio, topTres);
+        } else {
+            int mesNumerico = Integer.parseInt(mes);
+            topProductosIds = ventasRepository.findTopProductosIdsPorVentas(sucursal, mesNumerico, anio, topTres);
         }
 
-        return topProductos;
+        return topProductosIds.stream()
+                .map(productosRepository::findById)
+                .filter(Optional::isPresent)
+                .map(producto -> producto.get().getNombre())
+                .collect(Collectors.toList());
+
     }
 
+    // Metodo para lista de años con ventas
     @Override
     public List<Integer> obtenerAniosConVentas() {
         return ventasRepository.findDistinctYears();
     }
 
+    @Override
+    public Map<String, Long> contarVentasPorSucursal(String sucursal, String mes, int anio) {
+
+        Map<String, Long> ventasPorMes = new LinkedHashMap<>(); // Usar LinkedHashMap para mantener el orden
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM", new Locale("es")); // Formato en español
+
+        if ("Todos".equalsIgnoreCase(mes)) {
+            for (int i = 1; i <= 12; i++) {
+                procesarMes(sucursal, i, anio, ventasPorMes, formatter);
+            }
+        } else {
+            try {
+                int mesNumerico = Integer.parseInt(mes);
+                if (mesNumerico < 1 || mesNumerico > 12) {
+                    throw new IllegalArgumentException("El mes debe estar entre 1 y 12");
+                }
+                procesarMes(sucursal, mesNumerico, anio, ventasPorMes, formatter);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("El mes debe ser un número o 'Todos'");
+            }
+        }
+
+        return ventasPorMes;
+    }
+
+    private void procesarMes(String sucursal, int mes, int anio, Map<String, Long> ventasPorMes,
+            DateTimeFormatter formatter) {
+        LocalDate fechaInicio = LocalDate.of(anio, mes, 1);
+        LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
+
+        long ventas = ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
+        String mesEnEspanol = fechaInicio.format(formatter); // Obtener el mes en español
+
+        // Agregar al mapa usando el nombre del mes en español
+        ventasPorMes.put(mesEnEspanol, ventas);
+    }
+
+    @Override
+    public Map<String, Object> calcularGananciasPromedioNumeroVentas(String sucursal, String mes, int anio) {
+
+        Map<String, Object> estadisticas = new LinkedHashMap<>();
+        BigDecimal totalGanancias = BigDecimal.ZERO;
+        long totalVentas = 0;
+
+        if ("Todos".equalsIgnoreCase(mes)) {
+            for (int i = 1; i <= 12; i++) {
+                LocalDate fechaInicio = LocalDate.of(anio, i, 1);
+                LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
+
+                BigDecimal gananciasMes = ventasRepository.sumTotalVentaBySedeAndFechaBetween(sucursal, fechaInicio,
+                        fechaFin);
+                long ventasMes = ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
+
+                totalGanancias = totalGanancias.add(gananciasMes != null ? gananciasMes : BigDecimal.ZERO);
+                totalVentas += ventasMes;
+            }
+        } else {
+            try {
+                int mesNumerico = Integer.parseInt(mes);
+                if (mesNumerico < 1 || mesNumerico > 12) {
+                    throw new IllegalArgumentException("El mes debe estar entre 1 y 12");
+                }
+
+                LocalDate fechaInicio = LocalDate.of(anio, mesNumerico, 1);
+                LocalDate fechaFin = fechaInicio.withDayOfMonth(fechaInicio.lengthOfMonth());
+
+                totalGanancias = ventasRepository.sumTotalVentaBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
+                totalVentas = ventasRepository.countBySedeAndFechaBetween(sucursal, fechaInicio, fechaFin);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("El mes debe ser un número o 'Todos'");
+            }
+        }
+
+        BigDecimal promedioVentas = totalVentas > 0
+                ? totalGanancias.divide(BigDecimal.valueOf(totalVentas), 2, RoundingMode.HALF_UP)
+                : BigDecimal.ZERO;
+
+        // Agregar los resultados al mapa
+        estadisticas.put("Ganancias", totalGanancias);
+        estadisticas.put("PromedioVentas", promedioVentas);
+        estadisticas.put("NumeroVentas", totalVentas);
+
+        return estadisticas;
+    }
 }

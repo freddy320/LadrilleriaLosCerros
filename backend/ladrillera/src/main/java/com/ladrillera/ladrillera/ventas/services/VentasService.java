@@ -17,15 +17,13 @@ public interface VentasService {
 
   String verificarPosibilidadDeCompra(Long clienteId);
 
-  Map<String, Long> contarVentasPorSucursal(String sucursal, int anio);
+  Map<String, Long> contarVentasPorSucursal(String sucursal, String mes, int anio);
 
-  long contarVentasPorSucursalPorMes(String sucursal, int mes, int anio);
+  Map<String, Object> calcularGananciasPromedioNumeroVentas(String sucursal, String mes, int anio);
 
-  double calcularPromedioVentasPorMes(String sucursal, int mes, int anio);
+  List<String> obtenerTopTresClientesPorVentas(String sucursal, String mes, int anio);
 
-  List<Map<String, Object>> obtenerTopTresClientesPorVentas(String sucursal, int mes, int anio);
-
-  List<Map<String, Object>> obtenerTopTresProductosPorVentas(String sucursal, int mes, int anio);
+  List<String> obtenerNombresTopTresProductosPorVentas(String sucursal, String mes, int anio);
 
   List<Integer> obtenerAniosConVentas();
 

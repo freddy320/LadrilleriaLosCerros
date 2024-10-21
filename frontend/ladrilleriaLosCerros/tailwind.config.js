@@ -20,14 +20,19 @@ export default {
      
       gridTemplateColumns: {
         'home': '250px 1fr',
-        'gridGraficts': '4fr 1fr',
-
-        'gridMenuGraficts': '4fr 1fr'
+        'gridMenuGraficts': '4fr 1fr',
+         'anuncios': 'repeat(auto-fit, minmax(300px, 1fr))'
       },
 
       gridTemplateRows: {
         'graficsPanel': '0.4fr 1fr 8fr 0.5fr'
       },
+
+      gridAutoRows: {
+        'anuncios': '150px'
+      },
+
+      
     },
   },
   plugins: [],

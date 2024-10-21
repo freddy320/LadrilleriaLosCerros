@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CiLock, CiUser } from 'react-icons/ci';
-import logoCerros from '../utils/pintures/logo-los-cerros.webp'
+import logoCerros from '../utils/pintures/logo-los-cerros.webp';
 
 export function Login() {
   const [username, setUsername] = useState('');
@@ -13,8 +13,8 @@ export function Login() {
   };
 
   return (
-    <main className="h-screen flex justify-center items-center bg-background font-Montserrat relative">
-      <div className='overflow-hidden absolute top-0'>
+    <main className="min-h-screen flex justify-center items-center bg-background font-Montserrat relative p-4">
+      <div className='overflow-hidden absolute top-0 w-full'>
         <svg
           preserveAspectRatio="none"
           viewBox="0 0 1200 120"
@@ -32,11 +32,11 @@ export function Login() {
           <path d="M0 0v5.63C149.93 59 314.09 71.32 475.83 42.57c43-7.64 84.23-20.12 127.61-26.46 59-8.63 112.48 12.24 165.56 35.4C827.93 77.22 886 95.24 951.2 90c86.53-7 172.46-45.71 248.8-84.81V0z" />
         </svg>
       </div>
-      <div className="bg-contrast p-8 rounded-lg shadow-lg w-96 z-10">
-        <div className="pinture-container-custom flex justify-center mb-6">
-          <img className="pinture-custom" src={logoCerros} alt="logo" />
+      <div className="bg-contrast p-8 rounded-lg shadow-lg w-full max-w-md z-10">
+        <div className="flex justify-center mb-6">
+          <img className="w-32 h-auto" src={logoCerros} alt="logo" />
         </div>
-        <form onSubmit={handleLogin} className="flex flex-col gap-3">
+        <form onSubmit={handleLogin} className="flex flex-col gap-4">
           <div className="flex flex-col">
             <label className="text-black" htmlFor="username">Username</label>
             <div className="flex items-center border-b-2 border-red-300 py-2">
@@ -65,7 +65,7 @@ export function Login() {
               />
             </div>
           </div>
-          <p className="text-red-00 text-sm mt-8 text-left">¿Olvidaste tu contraseña?</p>
+          <p className="text-red-600 text-sm mt-4 text-left">¿Olvidaste tu contraseña?</p>
           <button
             type="submit"
             className="bg-primary text-white p-3 rounded-lg hover:bg-secondary transform transition-transform duration-300 active:scale-95 text-lg font-bold"
@@ -75,7 +75,6 @@ export function Login() {
           </button>
         </form>
       </div>
-      
     </main>
   );
 }
