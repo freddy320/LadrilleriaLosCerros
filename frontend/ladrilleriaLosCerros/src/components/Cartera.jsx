@@ -1,8 +1,8 @@
 
 import { MdDownload, MdSearch } from "react-icons/md";
-import { PiPerson } from "react-icons/pi";
 
-export const Ventas = () => {
+
+export const Cartera = () => {
     const data = [
         {
             cliente: "992782",
@@ -49,10 +49,10 @@ export const Ventas = () => {
         // Por si se quieren añadir mas de esta mierda
     ];
     return (
-        <div className="grid gap-4 p-6 bg-background">
-            <h1 className="text-3xl font-bold mb-3 font-Montserrat">Control y Seguimiento de Pagos</h1>
+        <div className="grid gap-4 bg-background">
+            <h1 className="text-xl font-semibold mb-3 font-Montserrat">Control y Seguimiento de Pagos</h1>
 
-            <div className="flex gap-4 mb-2 p-4 rounded bg-contrast shadow items-center">
+            <div className="flex gap-4 mb-2 p-4 rounded bg-contrast shadow items-center font-Montserrat">
                 <div className="flex-1 flex items-center">
                     <input
                         type="text"
@@ -84,7 +84,7 @@ export const Ventas = () => {
             </div>
 
             <div className="overflow-x-auto rounded">
-                <table className="min-w-full bg-white border rounded-md">
+                <table className="min-w-full bg-white border rounded-md font-lato">
                     <thead>
                         <tr className="bg-themePageDark text-white">
                             <th className="px-4 py-2">Cliente</th>
