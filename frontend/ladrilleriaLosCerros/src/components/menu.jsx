@@ -7,17 +7,12 @@ import { CiMoneyCheck1 } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { TfiAnnouncement } from "react-icons/tfi";
 import Panel from './Panel';
-<<<<<<< HEAD
 // import { Ventas } from './Ventas';
 import { Cartera } from './Cartera';
-
-const Item = ({children}) => {
-=======
 import { Anuncios } from './anuncios';
 import { useState } from 'react';
 
 const Item = ({ id, onClick, children }) => {
->>>>>>> main
   return (
     <div
       id={id}
@@ -59,15 +54,10 @@ export function Menu() {
           <div className='flex gap-2 items-center'>Username <CiSettings className='scale-150' /></div>
         </footer>
       </aside>
-<<<<<<< HEAD
-      <section className='overflow-scroll p-2'>
-       {/* <Panel /> */}
-       <Cartera />
-=======
       <section className='overflow-y-scroll scroll-smooth '>
         {opcion === 'panel' && <Panel />}
         {opcion === 'anuncios' && <Anuncios />}
->>>>>>> main
+        {opcion === 'cartera' && <Cartera />}
       </section>
     </main>
   );
