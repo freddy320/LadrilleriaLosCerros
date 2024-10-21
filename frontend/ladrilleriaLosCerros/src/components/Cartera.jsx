@@ -49,28 +49,26 @@ export const Cartera = () => {
         // Por si se quieren añadir mas de esta mierda
     ];
     return (
-        <div className="grid gap-4 bg-background">
-            <h1 className="text-xl font-semibold mb-3 font-Montserrat">Control y Seguimiento de Pagos</h1>
-
-            <div className="flex gap-4 mb-2 p-4 rounded bg-contrast shadow items-center font-Montserrat">
+        <div className="grid gap-2 mx-2 mt-2 bg-background">
+            <div className="flex gap-4 mb-2 p-2 bg-contrast shadow-lg items-center font-Montserrat rounded-xl">
                 <div className="flex-1 flex items-center">
                     <input
                         type="text"
                         placeholder="Buscar"
-                        className="border p-1 rounded focus:border-themePage ring-0"
+                        className="border p-1 rounded-xl focus:border-themePage ring-0"
                     />
-                    <button className="bg-themePage text-white p-2 rounded ml-2">
+                    <button className="bg-themePage text-white p-2 rounded-xl ml-2">
                         <MdSearch />
                     </button>
                 </div>
 
-                <select className="flex-1 border p-2 rounded focus:border-themePage">
+                <select className="flex-1 border p-2 rounded-xl focus:border-themePage">
                     <option>Seleccionar Cliente</option>
                     <option>992782</option>
                     <option>878292</option>
                 </select>
 
-                <select className="flex-1 border p-2 rounded focus:border-themePage">
+                <select className="flex-1 border p-2 rounded-xl focus:border-themePage">
                     <option value="estado">Filtrar por</option>
                     <option value="estado">Estado</option>
                     <option value="fechaVencimiento">Fecha de Vencimiento</option>
@@ -83,49 +81,40 @@ export const Cartera = () => {
                 </select>
             </div>
 
-            <div className="overflow-x-auto rounded">
-                <table className="min-w-full bg-white border rounded-md font-lato">
+            <div className="overflow-x-auto rounded-xl shadow-lg">
+                <table className="min-w-full bg-contrast border rounded-xl font-lato">
                     <thead>
-                        <tr className="bg-themePageDark text-white">
-                            <th className="px-4 py-2">Cliente</th>
-                            <th className="px-4 py-2">Prefijo</th>
-                            <th className="px-4 py-2">Documento</th>
-                            <th className="px-4 py-2">Estado</th>
-                            <th className="px-4 py-2">Saldo Pendiente</th>
-                            <th className="px-4 py-2">Fecha de Vencimiento</th>
-                            <th className="px-4 py-2">Fecha de Cálculo</th>
-                            <th className="px-4 py-2">Valor de la Factura</th>
-                            <th className="px-4 py-2">Total Abonado</th>
-                            <th className="px-4 py-2">Plan de Pago</th>
-                            <th className="px-4 py-2">Número de Cuotas</th>
-                            <th className="px-4 py-2">Valor por Cuota</th>
-                            <th className="px-4 py-2">Descargar Factura</th>
+                        <tr className="bg-themePage/95 text-white tex-center">
+                            <th className="px-2 py-2">Cliente</th>
+                            <th className="px-2 py-2">Prefijo</th>
+                            <th className="px-2 py-2">Documento</th>
+                            <th className="px-2 py-2">Estado</th>
+                            <th className="px-2 py-2">Saldo Pendiente</th>
+                            <th className="px-2 py-2">Fecha de Vencimiento</th>
+                            <th className="px-2 py-2">Fecha de Cálculo</th>
+                            <th className="px-2 py-2">Valor de la Factura</th>
+                            <th className="px-2 py-2">Total Abonado</th>
+                            <th className="px-2 py-2">Plan de Pago</th>
+                            <th className="px-2 py-2">Número de Cuotas</th>
+                            <th className="px-2 py-2">Valor por Cuota</th>
+                            <th className="px-2 py-2">Descargar Factura</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data.map((item, index) => (
-                            <tr key={index} className="border-b">
-                                <td className="px-4 py-2">{item.cliente}</td>
-                                <td className="px-4 py-2">{item.prefijo}</td>
-                                <td className="px-4 py-2">{item.documento}</td>
-
-                                
-                                <td className={`px-4 py-2 ${item.estado === 'Pagado' ? 'text-green-600' : 'text-red-600'}`}>
-                                    {item.estado}
-                                </td>
-
-                                
-                                <td className={`px-4 py-2 ${item.saldoPendiente > 0 ? 'text-red-600' : 'text-green-600'}`}>
-                                    {item.saldoPendiente}
-                                </td>
-
-                                <td className="px-4 py-2">{item.fechaVencimiento}</td>
-                                <td className="px-4 py-2">{item.fechaCalculo}</td>
-                                <td className="px-4 py-2">{item.valorFactura}</td>
-                                <td className="px-4 py-2">{item.totalAbonado}</td>
-                                <td className="px-4 py-2">{item.planPago}</td>
-                                <td className="px-4 py-2">{item.numeroCuotas}</td>
-                                <td className="px-4 py-2">{item.valorPorCuota}</td>
+                            <tr key={index} className="border-b text-center">
+                                <td className="px-2 py-2">{item.cliente}</td>
+                                <td className="px-2 py-2">{item.prefijo}</td>
+                                <td className="px-2 py-2">{item.documento}</td>
+                                <td className="px-2 py-2">{item.estado}</td>
+                                <td className="px-2 py-2">{item.saldoPendiente}</td>
+                                <td className="px-2 py-2">{item.fechaVencimiento}</td>
+                                <td className="px-2 py-2">{item.fechaCalculo}</td>
+                                <td className="px-2 py-2">{item.valorFactura}</td>
+                                <td className="px-2 py-2">{item.totalAbonado}</td>
+                                <td className="px-2 py-2">{item.planPago}</td>
+                                <td className="px-2 py-2">{item.numeroCuotas}</td>
+                                <td className="px-2 py-2">{item.valorPorCuota}</td>
 
                                 <td className="px-4 py-2">
                                     <button className="bg-themePage text-white p-1 rounded">
